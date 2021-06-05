@@ -21,7 +21,7 @@
             <a href="{% url 'index' %}" class="nav-link">HOME</a>
             <a href="{% url 'resume' %}" class="nav-link">RESUME</a>
             <a href="{% url 'projects' %}" class="nav-link">PROJECTS</a>
-            <a href="{% url 'blog' %}" class="nav-link active" active>BLOG</a>
+            <a href="{% url 'blogs' %}" class="nav-link active" active>BLOG</a>
             <a href="https://github.com/saichandrapandraju" class="nav-link" style="font-size:15px"><i class="fab fa-github"></i></a>
             <a href="https://www.linkedin.com/in/saichandra-pandraju/" class="nav-link" style="font-size:15px"><i class="fab fa-linkedin-in"></i></a>
         </nav>
@@ -31,19 +31,18 @@
     <div class="content-wrapper">
         <main>
             <section class="blog-section">
-                <h2 class="section-title">LATEST NEWS</h2>
-
+                
                 <div class="blog-posts-wrapper">
                     <article class="blog-post">
-                        <a href="#!" class="blog-post-link">
-                            <img src="{% static "images/News_1.jpg" %}" alt="news 1" class="blog-post-thumbnail">
-                            <h5 class="blog-post-title">Design Conferences in 2019</h5>
+                        <a href="{% url 'blogs:tf' %}" class="blog-post-link">
+                            <img src="{% static "images/tensorflow.png" %}" alt="TensorFlow" class="blog-post-thumbnail">
+                            <h5 class="blog-post-title">How and Why I became TensorFlow certified developer</h5>
 
                         </a>
-                        <p class="blog-post-meta">
+                        <!-- <p class="blog-post-meta">
                             <span class="post-published-date">28 DEC 2019</span>
                             <a href="#!" class="post-comments">3 COMMENTS</a>
-                        </p>
+                        </p> -->
                     </article>
                     <article class="blog-post">
                         <a href="#!" class="blog-post-link">

@@ -18,11 +18,13 @@ from django.urls import path
 from django.urls import include
 from portfolio import views as port_v
 from projects import views as proj_v
+from blogs import views as blog_v
 
 urlpatterns = [
     path('', port_v.index, name='index'),
     path('resume', port_v.resume, name='resume'),
-    path('blog', port_v.blog, name='blog'),
+    path('blog/', blog_v.blog, name='blogs'),
+    path('blog/', include('blogs.urls')),
     path('projects/', proj_v.index, name='projects'),
     path('projects/', include('projects.urls')),
     path('admin/', admin.site.urls),
