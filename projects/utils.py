@@ -8,7 +8,7 @@ def generate_question(context, answer):
     model_path = os.path.join(os.path.join(BASE_DIR,'projects'),'qgen_model')
 
     if 'pytorch_model.bin' not in os.listdir(model_path):
-        os.system(f'wget --no-check-certificate https://storage.googleapis.com/text-qgen/pytorch_model.bin -P {model_path}')
+        os.system(f'wget --no-check-certificate https://storage.googleapis.com/portfoliomodels/pytorch_model.bin -P {model_path}')
 
     tokenizer = T5Tokenizer.from_pretrained(model_path)
     model = T5ForConditionalGeneration.from_pretrained(model_path)
