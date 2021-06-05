@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Saichandra</title>
+    <link href="https://fonts.googleapis.com/css?family=Mukta:300,400,500,600,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static "vendors/@fortawesome/fontawesome-free/css/all.min.css" %}">
+    <link rel="stylesheet" href="{% static "css/live-resume.css" %}">
+</head>
+
+<body style="zoom: 115%">
+    <header>
+        <button class="btn btn-white btn-share ml-auto mr-5 ml-md-5 mr-md-auto invisible"><img src="{% static "images/share.svg" %}" alt="share" class="btn-img">
+            SHARE</button>
+        <nav class="collapsible-nav" id="collapsible-nav">
+            <a href="{% url 'index' %}" class="nav-link">HOME</a>
+            <a href="{% url 'resume' %}" class="nav-link">RESUME</a>
+            <a href="{% url 'projects' %}" class="nav-link">PROJECTS</a>
+            <a href="{% url 'blog' %}" class="nav-link active" active>BLOG</a>
+            <a href="https://github.com/saichandrapandraju" class="nav-link" style="font-size:15px"><i class="fab fa-github"></i></a>
+            <a href="https://www.linkedin.com/in/saichandra-pandraju/" class="nav-link" style="font-size:15px"><i class="fab fa-linkedin-in"></i></a>
+        </nav>
+        <button class="btn btn-menu-toggle btn-white rounded-circle" data-toggle="collapsible-nav"
+            data-target="collapsible-nav"><img src="{% static "images/hamburger.svg" %}" alt="hamburger"></button>
+    </header>
+    <div class="content-wrapper">
+        <main>
+            <section class="blog-section">
+                <h2 class="section-title">LATEST NEWS</h2>
+
+                <div class="blog-posts-wrapper">
+                    <article class="blog-post">
+                        <a href="#!" class="blog-post-link">
+                            <img src="{% static "images/News_1.jpg" %}" alt="news 1" class="blog-post-thumbnail">
+                            <h5 class="blog-post-title">Design Conferences in 2019</h5>
+
+                        </a>
+                        <p class="blog-post-meta">
+                            <span class="post-published-date">28 DEC 2019</span>
+                            <a href="#!" class="post-comments">3 COMMENTS</a>
+                        </p>
+                    </article>
+                    <article class="blog-post">
+                        <a href="#!" class="blog-post-link">
+                            <img src="{% static "images/News_2.jpg" %}" alt="news 2" class="blog-post-thumbnail">
+                            <h5 class="blog-post-title">Design Conferences in 2019</h5>
+                        </a>
+                        <p class="blog-post-meta">
+                            <span class="post-published-date">28 DEC 2019</span>
+                            <a href="#!" class="post-comments">3 COMMENTS</a>
+                        </p>
+                    </article>
+                    <article class="blog-post">
+                        <a href="#!" class="blog-post-link">
+                            <img src="{% static "images/News_3.jpg" %}" alt="news 3" class="blog-post-thumbnail">
+                            <h5 class="blog-post-title">Design Conferences in 2019</h5>
+                        </a>
+                        <p class="blog-post-meta">
+                            <span class="post-published-date">28 DEC 2019</span>
+                            <a href="#!" class="post-comments">3 COMMENTS</a>
+                        </p>
+                    </article>
+                    <article class="blog-post">
+                        <a href="#!" class="blog-post-link">
+                            <img src="{% static "images/News_4.jpg" %}" alt="news 4" class="blog-post-thumbnail">
+                            <h5 class="blog-post-title">Design Conferences in 2019</h5>
+                        </a>
+                        <p class="blog-post-meta">
+                            <span class="post-published-date">28 DEC 2019</span>
+                            <a href="#!" class="post-comments">3 COMMENTS</a>
+                        </p>
+                    </article>
+                    <article class="blog-post">
+                        <a href="#!" class="blog-post-link">
+                            <img src="{% static "images/News_5.jpg" %}" alt="news 5" class="blog-post-thumbnail">
+                            <h5 class="blog-post-title">Design Conferences in 2019</h5>
+                        </a>
+                        <p class="blog-post-meta">
+                            <span class="post-published-date">28 DEC 2019</span>
+                            <a href="#!" class="post-comments">3 COMMENTS</a>
+                        </p>
+                    </article>
+                    <article class="blog-post">
+                        <a href="#!" class="blog-post-link">
+                            <img src="{% static "images/News_6.jpg" %}" alt="news 6" class="blog-post-thumbnail">
+                            <h5 class="blog-post-title">Design Conferences in 2019</h5>
+                        </a>
+                        <p class="blog-post-meta">
+                            <span class="post-published-date">28 DEC 2019</span>
+                            <a href="#!" class="post-comments">3 COMMENTS</a>
+                        </p>
+                    </article>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="{% static "vendors/jquery/dist/jquery.min.js" %}"></script>
+    <script src="{% static "vendors/@popperjs/core/dist/umd/popper-base.min.js" %}"></script>
+    <script src="{% static "vendors/bootstrap/dist/js/bootstrap.min.js" %}"></script>
+    <script src="{% static "vendors/entry/jq.entry.min.js" %}"></script>
+    <script src="{% static "js/live-resume.js" %}"></script>
+</body>
+
+</html>

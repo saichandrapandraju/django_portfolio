@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Saichandra</title>
+    <link href="https://fonts.googleapis.com/css?family=Mukta:300,400,500,600,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static "vendors/@fortawesome/fontawesome-free/css/all.min.css" %}">
+    <link rel="stylesheet" href="{% static "css/live-resume.css" %}">
+</head>
+
+<body style="zoom: 115%">
+    <header>
+        <button class="btn btn-white btn-share ml-auto mr-5 ml-md-5 mr-md-auto invisible"><img src="{% static "images/share.svg" %}" alt="share" class="btn-img">
+            SHARE</button>
+        <nav class="collapsible-nav" id="collapsible-nav">
+            <a href="{% url 'index' %}" class="nav-link">HOME</a>
+            <a href="{% url 'resume' %}" class="nav-link">RESUME</a>
+            <a href="{% url 'projects' %}" class="nav-link active">PROJECTS</a>
+            <a href="{% url 'blog' %}" class="nav-link">BLOG</a>
+            <a href="https://github.com/saichandrapandraju" class="nav-link" style="font-size:15px"><i class="fab fa-github"></i></a>
+            <a href="https://www.linkedin.com/in/saichandra-pandraju/" class="nav-link" style="font-size:15px"><i class="fab fa-linkedin-in"></i></a>
+        </nav>
+        <button class="btn btn-menu-toggle btn-white rounded-circle" data-toggle="collapsible-nav"
+            data-target="collapsible-nav"><img src="{% static "images/hamburger.svg" %}" alt="hamburger"></button>
+    </header>
+    <div class="content-wrapper">
+        <main>
+            <section class="portfolio-section">
+                <h2 class="section-title">Question Generator</h2>
+            </section>
+            <section class="contact-section">
+                <form method="POST" class="contact-form">{% csrf_token %}
+                        <div class="form-group">
+                            <label for="context" class="sr-only">Context</label>
+                            <textarea name="context" id="context" class="form-control" placeholder="CONTEXT" rows="5" required="true"></textarea>
+                        </div>
+                        <div class="form-group form-group-name">
+                            <label for="answer" class="sr-only">Answer</label>
+                            <input type="text" name="answer" id="answer" class="form-control" placeholder="ANSWER" required="true">
+                        </div>
+                        <button type="submit" class="btn btn-primary form-submit-btn">GENERATE QUESTION</button>
+                    </form>
+            </section>
+            {% if upload %}
+                <h6 class="time-line-item-title">QUESTION : {{result}}</h6><br>
+            {% endif %}
+
+            <section class="intro-section">
+                <p>I'm Creative Director and UI/UX Designer from Sydney, Australia, working in web development and print
+                    media. I enjoy turning complex problems into simple, beautiful and intuitive designs. My job is to
+                    build your website so that it is functional and user-friendly but at the same time attractive.
+                    Moreover, I add personal touch to your product and make sure that is eye-catching and easy to use.
+                    My aim is to bring across your message and identity in the most creative way. I created web design
+                    for many famous brand companies.</p>
+            </section>
+
+
+            </main>
+    </div>
+    <script src="{% static "vendors/jquery/dist/jquery.min.js" %}"></script>
+    <script src="{% static "vendors/@popperjs/core/dist/umd/popper-base.min.js" %}"></script>
+    <script src="{% static "vendors/bootstrap/dist/js/bootstrap.min.js" %}"></script>
+    <script src="{% static "vendors/entry/jq.entry.min.js" %}"></script>
+    <script src="{% static "js/live-resume.js" %}"></script>
+
+</body>
+
+</html>
