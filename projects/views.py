@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from . import utils
 from . import models
+import os
 
 # Create your views here.
 def index(request):
@@ -20,10 +21,9 @@ def qgen(request):
 def traffic(request):
     if request.method == 'POST':
         request_file = models.Image_data(image=request.FILES['file_upload'])
-        print('im in')
         request_file.save()
-        print("File saved successfully at {}".format(request_file.image.name))
         result = utils.predict_traffic_sign(request_file.image.name)
+        os.remove(request_file.image.name)
         return render(request,'projects/traffic.html',{'upload':True, 'result':result})
 
 
