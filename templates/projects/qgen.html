@@ -37,11 +37,11 @@
                 <form method="POST" class="contact-form">{% csrf_token %}
                         <div class="form-group">
                             <label for="context" class="sr-only">Context</label>
-                            <textarea name="context" id="context" class="form-control" placeholder="CONTEXT" rows="5" required="true"></textarea>
+                            <textarea name="context" id="context" class="form-control" placeholder="CONTEXT*" rows="5" required="true">The encoder block has two sub-layers. The first is a multi-head self-attention mechanism, and the second is a simple, position-wise fully connected feed-forward network.</textarea>
                         </div>
                         <div class="form-group form-group-name">
                             <label for="answer" class="sr-only">Answer</label>
-                            <input type="text" name="answer" id="answer" class="form-control" placeholder="ANSWER" required="true">
+                            <input type="text" name="answer" id="answer" class="form-control" placeholder="ANSWER*" required="true" value="position-wise fully connected feed-forward network">
                         </div>
                         <button type="submit" class="btn btn-primary form-submit-btn">GENERATE QUESTION</button>
                     </form>

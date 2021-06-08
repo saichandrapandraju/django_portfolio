@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Saichandra</title>
+    <link href="https://fonts.googleapis.com/css?family=Mukta:300,400,500,600,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static "vendors/@fortawesome/fontawesome-free/css/all.min.css" %}">
+    <link rel="stylesheet" href="{% static "css/live-resume.css" %}">
+</head>
+
+<body style="zoom: 115%">
+    <header>
+        <button class="btn btn-white btn-share ml-auto mr-5 ml-md-5 mr-md-auto invisible"><img src="{% static "images/share.svg" %}" alt="share" class="btn-img">
+            SHARE</button>
+        <nav class="collapsible-nav" id="collapsible-nav">
+            <a href="{% url 'index' %}" class="nav-link">HOME</a>
+            <a href="{% url 'resume' %}" class="nav-link">RESUME</a>
+            <a href="{% url 'projects' %}" class="nav-link active">PROJECTS</a>
+            <a href="{% url 'blogs' %}" class="nav-link">BLOG</a>
+            <a href="https://github.com/saichandrapandraju" class="nav-link" style="font-size:15px"><i class="fab fa-github"></i></a>
+            <a href="https://www.linkedin.com/in/saichandra-pandraju/" class="nav-link" style="font-size:15px"><i class="fab fa-linkedin-in"></i></a>
+        </nav>
+        <button class="btn btn-menu-toggle btn-white rounded-circle" data-toggle="collapsible-nav"
+            data-target="collapsible-nav"><img src="{% static "images/hamburger.svg" %}" alt="hamburger"></button>
+    </header>
+    <div class="content-wrapper">
+        <main>
+            <section class="portfolio-section">
+                <h2 class="section-title">Traffic Sign Recognition</h2>
+            </section>
+            <section class="contact-section">
+                <form method="POST" class="contact-form" enctype="multipart/form-data">{% csrf_token %}
+                    <div class="form-group" style="align-items: center;">
+                        <label for="file_upload" class="sr-only">Input Traffic Sign</label>
+                        <input type="file" class="form-control" name="file_upload" id="file_upload" required="true"/>
+                    </div>
+                    <button type="submit" class="btn btn-primary form-submit-btn">PREDICT SIGN</button>
+                </form>
+            </section>
+            {% if upload %}
+                <h6 class="time-line-item-title">PREDICTED SIGN : {{result}}</h6><br>
+            {% endif %}
+            <section class="intro-section">
+                <p>These are the list of signs this model can predict - </p>
+                <p>Speed limit (20km/h) <br>
+                    Speed limit (30km/h) <br> 
+                    Speed limit (50km/h) <br> 
+                    Speed limit (60km/h) <br> 
+                    Speed limit (70km/h) <br> 
+                    Speed limit (80km/h) <br> 
+                    End of speed limit (80km/h) <br>
+                    Speed limit (100km/h) <br> 
+                    Speed limit (120km/h) <br> 
+                    No passing <br> 
+                    No passing veh over 3.5 tons <br> 
+                    Right-of-way at intersection <br> 
+                    Priority road <br> 
+                    Yield <br> 
+                    Stop <br> 
+                    No vehicles <br> 
+                    Veh > 3.5 tons prohibited <br> 
+                    No entry <br>
+                    General caution <br> 
+                    Dangerous curve left <br> 
+                    Dangerous curve right <br> 
+                    Double curve <br> 
+                    Bumpy road <br> 
+                    Slippery road <br> 
+                    Road narrows on the right <br>
+                    Road work <br> 
+                    Traffic signals <br> 
+                    Pedestrians <br> 
+                    Children crossing <br> 
+                    Bicycles crossing <br> 
+                    Beware of ice/snow <br>
+                    Wild animals crossing <br> 
+                    End speed + passing limits <br> 
+                    Turn right ahead <br> 
+                    Turn left ahead <br> 
+                    Ahead only <br> 
+                    Go straight or right <br>
+                    Go straight or left <br> 
+                    Keep right <br>
+                    Keep left <br> 
+                    Roundabout mandatory <br> 
+                    End of no passing <br>
+                    End no passing veh > 3.5 tons <br></p>
+            </section>
+
+
+            </main>
+    </div>
+    <script src="{% static "vendors/jquery/dist/jquery.min.js" %}"></script>
+    <script src="{% static "vendors/@popperjs/core/dist/umd/popper-base.min.js" %}"></script>
+    <script src="{% static "vendors/bootstrap/dist/js/bootstrap.min.js" %}"></script>
+    <script src="{% static "vendors/entry/jq.entry.min.js" %}"></script>
+    <script src="{% static "js/live-resume.js" %}"></script>
+
+</body>
+
+</html>

@@ -5,3 +5,5 @@ https://download.pytorch.org/whl/cpu/torch-1.8.1%2Bcpu-cp37-cp37m-linux_x86_64.w
 tqdm==4.61.0
 transformers==4.6.1
 wget==3.2
+opencv-python==4.5.2.54
+Pillow==8.2.0
