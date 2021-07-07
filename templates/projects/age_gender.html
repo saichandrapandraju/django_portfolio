@@ -31,33 +31,27 @@
     <div class="content-wrapper">
         <main>
             <section class="portfolio-section">
-                <h2 class="section-title">Question Generator</h2>
+                <h2 class="section-title">Gender and Age Prediction</h2>
             </section>
             <section class="contact-section">
-                <form method="POST" class="contact-form">{% csrf_token %}
-                        <div class="form-group">
-                            <!-- <p> <strong>CONTEXT:</strong></p> -->
-                            <!-- <label for="context" class="sr-only">Context</label> -->
-                            CONTEXT: <textarea name="context" id="context" class="form-control" placeholder="CONTEXT*" rows="5" required="true">The encoder block has two sub-layers. The first is a multi-head self-attention mechanism, and the second is a simple, position-wise fully connected feed-forward network.</textarea>
-                        </div>
-                        <div class="form-group form-group-name">
-                            <!-- <p> <strong>ANSWER:</strong></p> -->
-                            <!-- <label for="answer" class="sr-only">Answer</label> -->
-                            ANSWER: <input type="text" name="answer" id="answer" class="form-control" placeholder="ANSWER*" required="true" value="position-wise fully connected feed-forward network">
-                        </div>
-                        <div>
-                            <br>
-                            <button type="submit" class="btn btn-primary form-submit-btn" >GENERATE QUESTION</button>
-                        </div>
-                        
-                    </form>
+                <form method="POST" class="contact-form" enctype="multipart/form-data">{% csrf_token %}
+                    <div class="form-group" style="align-items: center;">
+                        <label for="file_upload" class="sr-only">Input a human image</label>
+                        <input type="file" class="form-control" name="file_upload" id="file_upload" required="true" data-input="false" data-iconName="fa fa-upload" data-buttonText="Upload File"/>
+                    </div>
+                    <button type="submit" class="btn btn-primary form-submit-btn">PREDICT</button>
+                </form>
             </section>
+            <form id="example_form" method="POST" class="contact-form" enctype="multipart/form-data" action="{% url 'projects:agender' %}">{% csrf_token %}
+                <a href="#" onclick="document.forms['example_form'].submit();" > <img src="{% static "images/question.png" %}" alt="project" class="portfolio-item-img" style="width: 100px; height: 100px;"> </a>
+                <!-- <button type="submit" class="btn btn-primary form-submit-btn">PREDICT</button> -->
+            </form>
             {% if upload %}
-                <h6 class="time-line-item-title">PREDICTED QUESTION : {{result}}</h6><br>
+                <h6 class="time-line-item-title">Predicted Gender : {{result.gender}}</h6><br>
+                <h6 class="time-line-item-title">Predicted Age : {{result.age}}</h6><br>
             {% endif %}
-
             <section class="intro-section">
-                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Reiciendis minima blanditiis voluptatum maxime ipsum, accusantium natus temporibus et itaque quas harum commodi dignissimos eaque facilis animi reprehenderit quasi ex sint.</p>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit cupiditate laboriosam voluptatum iste consectetur impedit, iusto illo vel? Voluptates voluptatem excepturi fugiat maxime voluptas, libero qui quis fugit suscipit reprehenderit.</p>
             </section>
 
 

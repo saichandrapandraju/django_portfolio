@@ -28,3 +28,15 @@ def traffic(request):
 
 
     return render(request,'projects/traffic.html', {'upload':False})
+
+def agender(request):
+    result = {'age':33, 'gender':'MALE'}
+    if request.method == 'POST':
+        # request_file = models.Image_data(image=request.FILES['file_upload'])
+        # request_file.save()
+        # result = utils.predict_agender(request_file.image.name)
+        # os.remove(request_file.image.name)
+        return render(request,'projects/age_gender.html',{'upload':True, 'result':result})
+
+
+    return render(request,'projects/age_gender.html', {'upload':False})

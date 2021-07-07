@@ -10788,9 +10788,9 @@ main .contact-form .form-group-email {
 }
 main .contact-form .form-control {
   border: 0;
-  border-radius: 0;
+  /* border-radius: 0; */
   background-color: #1f2123;
-  padding: 12px 14px;
+  /* padding: 12px 14px; */
   color: #ffffff;
   font-size: 12px;
   line-height: 1.5;

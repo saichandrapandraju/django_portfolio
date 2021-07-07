@@ -42,6 +42,16 @@
                     <button type="submit" class="btn btn-primary form-submit-btn">PREDICT SIGN</button>
                 </form>
             </section>
+            <p>You can download any of the below images and upload to quickly live test this project.</p>
+            <a href="{% static "images/vehicle.png" %}" download="vehicle" > <img src="{% static "images/vehicle.png" %}" alt="project" class="portfolio-item-img" style="width: 100px; height: 100px;"> </a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="{% static "images/caution.png" %}" download="caution" > <img src="{% static "images/caution.png" %}" alt="project" class="portfolio-item-img" style="width: 100px; height: 100px;"> </a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="{% static "images/bumpy_road.png" %}" download="bumpy_road" > <img src="{% static "images/bumpy_road.png" %}" alt="project" class="portfolio-item-img" style="width: 100px; height: 100px;"> </a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="{% static "images/slippery_road.png" %}" download="slippery_road" > <img src="{% static "images/slippery_road.png" %}" alt="project" class="portfolio-item-img" style="width: 100px; height: 100px;"> </a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="{% static "images/children_crossing.png" %}" download="children_crossing" > <img src="{% static "images/children_crossing.png" %}" alt="project" class="portfolio-item-img" style="width: 100px; height: 100px;"> </a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="{% static "images/animal_crossing.png" %}" download="animal_crossing" > <img src="{% static "images/animal_crossing.png" %}" alt="project" class="portfolio-item-img" style="width: 100px; height: 100px;"> </a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="{% static "images/pedestrian.png" %}" download="pedestrian" > <img src="{% static "images/pedestrian.png" %}" alt="project" class="portfolio-item-img" style="width: 100px; height: 100px;"> </a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+            <br><br><br>
             {% if upload %}
                 <h6 class="time-line-item-title">PREDICTED SIGN : {{result}}</h6><br>
             {% endif %}
