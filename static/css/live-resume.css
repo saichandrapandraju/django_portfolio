@@ -10871,6 +10871,23 @@ main .location-section .map-wrapper {
   -webkit-animation: out-left 300ms ease 0ms 1 forwards;
   animation: out-left 300ms ease 0ms 1 forwards;
 }
+.loader {
+  border: 3px solid #f3f3f3; /* Light grey */
+  border-top: 3px solid #0052c3; /* Blue */
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
 
 @-webkit-keyframes in-up {
   from {

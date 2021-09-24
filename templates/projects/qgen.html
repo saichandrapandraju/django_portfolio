@@ -34,7 +34,7 @@
                 <h2 class="section-title">Question Generator</h2>
             </section>
             <section class="contact-section">
-                <form method="POST" class="contact-form">{% csrf_token %}
+                <form method="POST" class="contact-form" id="qgen_form">{% csrf_token %}
                         <div class="form-group">
                             <!-- <p> <strong>CONTEXT:</strong></p> -->
                             <!-- <label for="context" class="sr-only">Context</label> -->
@@ -52,9 +52,8 @@
                         
                     </form>
             </section>
-            {% if upload %}
-                <h6 class="time-line-item-title">PREDICTED QUESTION : {{result}}</h6><br>
-            {% endif %}
+            <div class="loader" id="loader"></div>
+            <h5 class="time-line-item-title" id="output"></h5><br>
 
             <section class="intro-section">
                 <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Reiciendis minima blanditiis voluptatum maxime ipsum, accusantium natus temporibus et itaque quas harum commodi dignissimos eaque facilis animi reprehenderit quasi ex sint.</p>
@@ -68,6 +67,7 @@
     <script src="{% static "vendors/bootstrap/dist/js/bootstrap.min.js" %}"></script>
     <script src="{% static "vendors/entry/jq.entry.min.js" %}"></script>
     <script src="{% static "js/live-resume.js" %}"></script>
+    <script src="{% static "js/qgen.js" %}"></script>
 
 </body>
 

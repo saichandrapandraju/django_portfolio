@@ -7,7 +7,7 @@ app_name = 'projects'
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('qgen', views.qgen, name='qgen'),
+    path(r'qgen', views.qgen, name='qgen'),
     path('traffic', views.traffic, name='traffic'),
     path('agender', views.agender, name='agender')
 ]
