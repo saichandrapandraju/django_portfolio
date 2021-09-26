@@ -21,18 +21,20 @@ def qgen(request):
         return JsonResponse(response)
         # return render(request,'projects/qgen.html', {'upload':True, 'result':result})
 
-    return render(request, 'projects/qgen.html', {'upload': False})
+    return render(request, 'projects/qgen.html')
 
 
 def traffic(request):
-    if request.method == 'POST':
-        request_file = models.Image_data(image=request.FILES['file_upload'])
+    if request.is_ajax and request.method == 'POST':
+        request_file = models.Image_data(
+            image=request.FILES.get('file'))
         request_file.save()
         result = utils.predict_traffic_sign(request_file.image.name)
         os.remove(request_file.image.name)
-        return render(request, 'projects/traffic.html', {'upload': True, 'result': result})
+        response = {'sign': result}
+        return JsonResponse(response)
 
-    return render(request, 'projects/traffic.html', {'upload': False})
+    return render(request, 'projects/traffic.html')
 
 
 def agender(request):

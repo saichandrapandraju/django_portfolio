@@ -34,7 +34,7 @@
                 <h2 class="section-title">Traffic Sign Recognition</h2>
             </section>
             <section class="contact-section">
-                <form method="POST" class="contact-form" enctype="multipart/form-data">{% csrf_token %}
+                <form method="POST" class="contact-form" enctype="multipart/form-data" id="traffic_sign_form">{% csrf_token %}
                     <div class="form-group" style="align-items: center;">
                         <label for="file_upload" class="sr-only">Input Traffic Sign</label>
                         <input type="file" class="form-control" name="file_upload" id="file_upload" required="true"/>
@@ -52,10 +52,13 @@
             <a href="{% static "images/pedestrian.png" %}" download="pedestrian" > <img src="{% static "images/pedestrian.png" %}" alt="project" class="portfolio-item-img" style="width: 100px; height: 100px;"> </a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
             <br><br><br>
-            {% if upload %}
+            <div class="loader" id="loader"></div>
+            <p style="font-size: 10px;" id="time">It may take ~15 secs...</p>
+            <h5 class="time-line-item-title" id="output"></h5><br>
+            <!-- {% if upload %}
                 <h6 class="time-line-item-title">PREDICTED SIGN : {{result}}</h6><br>
-            {% endif %}
-            <section class="intro-section">
+            {% endif %} -->
+            <!-- <section class="intro-section">
                 <p>These are the list of signs this model can predict - </p>
                 <p>Speed limit (20km/h) <br>
                     Speed limit (30km/h) <br> 
@@ -100,7 +103,7 @@
                     Roundabout mandatory <br> 
                     End of no passing <br>
                     End no passing veh > 3.5 tons <br></p>
-            </section>
+            </section> -->
 
 
             </main>
@@ -110,6 +113,7 @@
     <script src="{% static "vendors/bootstrap/dist/js/bootstrap.min.js" %}"></script>
     <script src="{% static "vendors/entry/jq.entry.min.js" %}"></script>
     <script src="{% static "js/live-resume.js" %}"></script>
+    <script src="{% static "js/traffic_sign.js" %}"></script>
 
 </body>
 

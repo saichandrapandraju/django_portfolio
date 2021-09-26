@@ -33,6 +33,10 @@
             <section class="portfolio-section">
                 <h2 class="section-title">Question Generator</h2>
             </section>
+            <section class="intro-section">
+                <p>Given some context and answer, I can generate a question for ya!!! Wanna try once ? Go ahead and click 'GENERATE QUESTION'... </p>
+                <p>This is based only on text but by integrating these kind of models with variety of data (eg. tables, <a href="https://doi.org/10.3991/ijet.v16i18.25121" target="_blank">here's</a> my work), you can create Automatic Question Generation (AQG) systems that can benefit many domains.</p>
+            </section>
             <section class="contact-section">
                 <form method="POST" class="contact-form" id="qgen_form">{% csrf_token %}
                         <div class="form-group">
@@ -53,11 +57,10 @@
                     </form>
             </section>
             <div class="loader" id="loader"></div>
+            <p style="font-size: 10px;" id="time">It may take ~15 secs...</p>
             <h5 class="time-line-item-title" id="output"></h5><br>
 
-            <section class="intro-section">
-                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Reiciendis minima blanditiis voluptatum maxime ipsum, accusantium natus temporibus et itaque quas harum commodi dignissimos eaque facilis animi reprehenderit quasi ex sint.</p>
-            </section>
+            
 
 
             </main>
