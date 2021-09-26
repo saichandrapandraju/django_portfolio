@@ -1,6 +1,6 @@
 import os
 import json
-from transformers import T5ForConditionalGeneration, T5Tokenizer
+from transformers import T5ForConditionalGeneration, T5Tokenizer, MBartForConditionalGeneration, MBart50TokenizerFast
 import tensorflow as tf
 import numpy as np
 import cv2
@@ -15,11 +15,14 @@ qgen_model_path = os.path.join(
 traffic_sign_model_path = os.path.join(os.path.join(
     BASE_DIR, 'projects'), 'traffic_sign_model')
 
+en_2_in_model_path = os.path.join(os.path.join(
+    BASE_DIR, 'projects'), 'translate_en_2_IN')
+
 
 def generate_question(context, answer):
     if 'pytorch_model.bin' not in os.listdir(qgen_model_path):
         os.system(
-            f'wget --no-check-certificate https://storage.googleapis.com/portfoliomodels/pytorch_model.bin -P {qgen_model_path}')
+            f'wget --no-check-certificate https://storage.googleapis.com/portfoliomodels/qgen_base.bin --output-document={qgen_model_path}/pytorch_model.bin')
     tokenizer = T5Tokenizer.from_pretrained(qgen_model_path)
     model = T5ForConditionalGeneration.from_pretrained(qgen_model_path)
 
@@ -115,3 +118,34 @@ def predict_agender(img_path):
     inp_img = inp_img.astype('float32')/255
     pred = np.argmax(model.predict(inp_img), axis=-1)
     return classes[pred[0]+1]
+
+
+def en_2_in(en_txt):
+
+    if 'pytorch_model.bin' not in os.listdir(qgen_model_path):
+        os.system(
+            f'wget --no-check-certificate https://storage.googleapis.com/portfoliomodels/en_2_in.bin --output-document={en_2_in_model_path}/pytorch_model.bin')
+
+    model = MBartForConditionalGeneration.from_pretrained(en_2_in_model_path)
+    tokenizer = MBart50TokenizerFast.from_pretrained(
+        en_2_in_model_path, src_lang="en_XX")
+
+    lang_to_key = {
+        "Gujarati": "gu_IN",
+        "Hindi": "hi_IN",
+        "Bengali": "bn_IN",
+        "Malayalam": "ml_IN",
+        "Marathi": "mr_IN",
+        "Tamil": "ta_IN",
+        "Telugu": "te_IN"
+    }
+
+    model_inputs = tokenizer(en_txt.strip(), return_tensors="pt")
+    response = ""
+    for k, v in lang_to_key.items():
+        generated_tokens = model.generate(
+            **model_inputs, forced_bos_token_id=tokenizer.lang_code_to_id[v])
+        out = tokenizer.batch_decode(
+            generated_tokens, skip_special_tokens=True)[0]
+        response += f"{k}: {out}\n"
+    return response.strip()

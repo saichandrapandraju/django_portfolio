@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Saichandra</title>
+    <link href="https://fonts.googleapis.com/css?family=Mukta:300,400,500,600,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static "vendors/@fortawesome/fontawesome-free/css/all.min.css" %}">
+    <link rel="stylesheet" href="{% static "css/live-resume.css" %}">
+</head>
+
+<body style="zoom: 115%">
+    <header>
+        <button class="btn btn-white btn-share ml-auto mr-5 ml-md-5 mr-md-auto invisible"><img src="{% static "images/share.svg" %}" alt="share" class="btn-img">
+            SHARE</button>
+        <nav class="collapsible-nav" id="collapsible-nav">
+            <a href="{% url 'index' %}" class="nav-link">HOME</a>
+            <a href="{% url 'resume' %}" class="nav-link">RESUME</a>
+            <a href="{% url 'projects' %}" class="nav-link active">PROJECTS</a>
+            <a href="{% url 'blogs' %}" class="nav-link">BLOG</a>
+            <a href="https://github.com/saichandrapandraju" target="_blank" class="nav-link" style="font-size:15px"><i class="fab fa-github"></i></a>
+            <a href="https://www.linkedin.com/in/saichandra-pandraju/" target="_blank" class="nav-link" style="font-size:15px"><i class="fab fa-linkedin-in"></i></a>
+        </nav>
+        <button class="btn btn-menu-toggle btn-white rounded-circle" data-toggle="collapsible-nav"
+            data-target="collapsible-nav"><img src="{% static "images/hamburger.svg" %}" alt="hamburger"></button>
+    </header>
+    <div class="content-wrapper">
+        <main>
+            <section class="portfolio-section">
+                <h2 class="section-title">English to Indian Language Translator</h2>
+            </section>
+            <section class="intro-section">
+                <p>Translate English text to 7 Indian Languages. </p>
+            </section>
+            <section class="contact-section">
+                <form method="POST" class="contact-form" id="en_2_in_form">{% csrf_token %}
+                        <div class="form-group">
+                            <!-- <p> <strong>CONTEXT:</strong></p> -->
+                            <!-- <label for="context" class="sr-only">Context</label> -->
+                            ENGLISH TEXT: <textarea name="english" id="english" class="form-control" placeholder="ENGLISH*" rows="5" required="true">The encoder block has two sub-layers. The first is a multi-head self-attention mechanism, and the second is a simple, position-wise fully connected feed-forward network.</textarea>
+                        </div>
+                        <div>
+                            <br>
+                            <button type="submit" class="btn btn-primary form-submit-btn" >TRANSLATE</button>
+                        </div>
+                        
+                    </form>
+            </section>
+            <div class="loader" id="loader"></div>
+            <p style="font-size: 10px;" id="time">It may take ~15 secs...</p>
+            <pre class="time-line-item-title" style="color: white;"><h5 class="time-line-item-title" id="output"></h5></pre><br>
+
+            </main>
+    </div>
+    <script src="{% static "vendors/jquery/dist/jquery.min.js" %}"></script>
+    <script src="{% static "vendors/@popperjs/core/dist/umd/popper-base.min.js" %}"></script>
+    <script src="{% static "vendors/bootstrap/dist/js/bootstrap.min.js" %}"></script>
+    <script src="{% static "vendors/entry/jq.entry.min.js" %}"></script>
+    <script src="{% static "js/live-resume.js" %}"></script>
+    <script src="{% static "js/en_2_in.js" %}"></script>
+
+</body>
+
+</html>

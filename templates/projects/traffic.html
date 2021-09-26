@@ -22,8 +22,8 @@
             <a href="{% url 'resume' %}" class="nav-link">RESUME</a>
             <a href="{% url 'projects' %}" class="nav-link active">PROJECTS</a>
             <a href="{% url 'blogs' %}" class="nav-link">BLOG</a>
-            <a href="https://github.com/saichandrapandraju" class="nav-link" style="font-size:15px"><i class="fab fa-github"></i></a>
-            <a href="https://www.linkedin.com/in/saichandra-pandraju/" class="nav-link" style="font-size:15px"><i class="fab fa-linkedin-in"></i></a>
+            <a href="https://github.com/saichandrapandraju" target="_blank" class="nav-link" style="font-size:15px"><i class="fab fa-github"></i></a>
+            <a href="https://www.linkedin.com/in/saichandra-pandraju/" target="_blank" class="nav-link" style="font-size:15px"><i class="fab fa-linkedin-in"></i></a>
         </nav>
         <button class="btn btn-menu-toggle btn-white rounded-circle" data-toggle="collapsible-nav"
             data-target="collapsible-nav"><img src="{% static "images/hamburger.svg" %}" alt="hamburger"></button>
@@ -42,7 +42,7 @@
                     <button type="submit" class="btn btn-primary form-submit-btn">PREDICT SIGN</button>
                 </form>
             </section>
-            <p>You can download any of the below images and upload to quickly live test this project.</p>
+            <p>Below are the kind of images that this model is trained on. You can download any of these images and upload them to quickly test this project.</p>
             <a href="{% static "images/vehicle.png" %}" download="vehicle" > <img src="{% static "images/vehicle.png" %}" alt="project" class="portfolio-item-img" style="width: 100px; height: 100px;"> </a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <a href="{% static "images/caution.png" %}" download="caution" > <img src="{% static "images/caution.png" %}" alt="project" class="portfolio-item-img" style="width: 100px; height: 100px;"> </a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <a href="{% static "images/bumpy_road.png" %}" download="bumpy_road" > <img src="{% static "images/bumpy_road.png" %}" alt="project" class="portfolio-item-img" style="width: 100px; height: 100px;"> </a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
