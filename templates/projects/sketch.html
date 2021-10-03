@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Saichandra</title>
+    <link href="https://fonts.googleapis.com/css?family=Mukta:300,400,500,600,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static "vendors/@fortawesome/fontawesome-free/css/all.min.css" %}">
+    <link rel="stylesheet" href="{% static "css/live-resume.css" %}">
+</head>
+
+<body style="zoom: 115%">
+    <header>
+        <button class="btn btn-white btn-share ml-auto mr-5 ml-md-5 mr-md-auto invisible"><img src="{% static "images/share.svg" %}" alt="share" class="btn-img">
+            SHARE</button>
+        <nav class="collapsible-nav" id="collapsible-nav">
+            <a href="{% url 'index' %}" class="nav-link">HOME</a>
+            <a href="{% url 'resume' %}" class="nav-link">RESUME</a>
+            <a href="{% url 'projects' %}" class="nav-link active">PROJECTS</a>
+            <a href="{% url 'blogs' %}" class="nav-link">BLOG</a>
+            <a href="https://github.com/saichandrapandraju" target="_blank" class="nav-link" style="font-size:15px"><i class="fab fa-github"></i></a>
+            <a href="https://www.linkedin.com/in/saichandra-pandraju/" target="_blank" class="nav-link" style="font-size:15px"><i class="fab fa-linkedin-in"></i></a>
+        </nav>
+        <button class="btn btn-menu-toggle btn-white rounded-circle" data-toggle="collapsible-nav"
+            data-target="collapsible-nav"><img src="{% static "images/hamburger.svg" %}" alt="hamburger"></button>
+    </header>
+    <div class="content-wrapper">
+        <main>
+            <section class="portfolio-section">
+                <h2 class="section-title">Image to Pencil Sketch</h2>
+            </section>
+            <section class="contact-section">
+                <form method="POST" class="contact-form" enctype="multipart/form-data" id="traffic_sign_form">{% csrf_token %}
+                    <div class="form-group" style="align-items: center;">
+                        <label for="file_upload" class="sr-only">Input an image</label>
+                        <input type="file" class="form-control" name="file_upload" id="file_upload" required="true"/>
+                    </div>
+                    <button type="submit" class="btn btn-primary form-submit-btn">Convert to Pencil Sketch</button>
+                </form>
+            </section>
+            <p>You can download any of these images and upload them to quickly test.</p>
+            <a href="{% static "images/sketch_1.png" %}" download="sketch_1" > <img src="{% static "images/sketch_1.png" %}" alt="project" class="portfolio-item-img" style="width: 200px; height: 200px;"> </a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="{% static "images/sketch_2.png" %}" download="sketch_2" > <img src="{% static "images/sketch_2.png" %}" alt="project" class="portfolio-item-img" style="width: 200px; height: 200px;"> </a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="{% static "images/sketch_3.png" %}" download="sketch_3" > <img src="{% static "images/sketch_3.png" %}" alt="project" class="portfolio-item-img" style="width: 200px; height: 200px;"> </a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="{% static "images/sketch_4.jpg" %}" download="sketch_4" > <img src="{% static "images/sketch_4.jpg" %}" alt="project" class="portfolio-item-img" style="width: 200px; height: 200px;"> </a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <br><br><br>
+            {% if upload %}
+                <a href="{% static "images/sketched/sketch.png" %}" download="output" > <img src="{% static "images/sketched/sketch.png" %}" style="width: 200px; height: 200px;"> </a>
+            {% endif %}
+            
+            </main>
+    </div>
+    <script src="{% static "vendors/jquery/dist/jquery.min.js" %}"></script>
+    <script src="{% static "vendors/@popperjs/core/dist/umd/popper-base.min.js" %}"></script>
+    <script src="{% static "vendors/bootstrap/dist/js/bootstrap.min.js" %}"></script>
+    <script src="{% static "vendors/entry/jq.entry.min.js" %}"></script>
+    <script src="{% static "js/live-resume.js" %}"></script>
+
+</body>
+
+</html>

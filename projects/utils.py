@@ -149,3 +149,27 @@ def en_2_in(en_txt):
             generated_tokens, skip_special_tokens=True)[0]
         response += f"{k}: {out}\n"
     return response.strip()
+
+
+def sketch(img_path):
+    import cv2
+    from PIL import Image
+
+    def dodgeV2(x, y):
+        return cv2.divide(x, 255 - y, scale=256)
+
+    try:
+        img = cv2.imread(img_path, 1)
+        img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        img_invert = cv2.bitwise_not(img_gray)
+        img_smoothing = cv2.GaussianBlur(
+            img_invert, (21, 21), sigmaX=0, sigmaY=0)
+        final_img = dodgeV2(img_gray, img_smoothing)
+        fimg = Image.fromarray(final_img)
+        save_path = os.path.join(os.path.join(os.path.join(os.path.join(
+            BASE_DIR, 'static'), 'images'), 'sketched'), 'sketch.png')
+        os.remove(save_path)
+        fimg.save(save_path)
+        return save_path
+    except Exception as e:
+        return None

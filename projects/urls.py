@@ -11,4 +11,5 @@ urlpatterns = [
     path('traffic', views.traffic, name='traffic'),
     path('agender', views.agender, name='agender'),
     path('en_2_in', views.en_2_in, name='en_2_in'),
+    path('sketch', views.sketch, name='sketch'),
 ]

@@ -58,3 +58,15 @@ def en_2_in(request):
         response = {'output': utils.en_2_in(en_txt)}
         return JsonResponse(response)
     return render(request, 'projects/en_2_in.html')
+
+
+def sketch(request):
+    if request.method == 'POST':
+        request_file = models.Image_data(image=request.FILES['file_upload'])
+        request_file.save()
+        result = utils.sketch(request_file.image.name)
+        print(request_file.image.name)
+        os.remove(request_file.image.name)
+        return render(request, 'projects/sketch.html', {'upload': True, 'result': result})
+
+    return render(request, 'projects/sketch.html')
