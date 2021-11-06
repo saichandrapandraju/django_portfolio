@@ -1,7 +1,7 @@
 Django==3.2.4
 sentencepiece==0.1.95
 tensorflow-cpu==2.5.0
-# https://download.pytorch.org/whl/cpu/torch-1.10.0%2Bcpu-cp36-cp36m-linux_x86_64.whl
+https://download.pytorch.org/whl/cpu/torch-1.10.0%2Bcpu-cp36-cp36m-linux_x86_64.whl
 tqdm==4.61.0
 transformers==4.6.1
 wget==3.2
