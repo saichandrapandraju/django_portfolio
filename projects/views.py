@@ -65,8 +65,22 @@ def sketch(request):
         request_file = models.Image_data(image=request.FILES['file_upload'])
         request_file.save()
         result = utils.sketch(request_file.image.name)
-        print(request_file.image.name)
+        # print(request_file.image.name)
         os.remove(request_file.image.name)
         return render(request, 'projects/sketch.html', {'upload': True, 'result': result})
 
     return render(request, 'projects/sketch.html')
+
+
+def ai4code(request):
+    if request.is_ajax and request.method == 'POST':
+        data = request.POST.dict()
+        code = data.get('code')
+        language = data.get('language')
+        # print(code, language)
+        result = utils.ai4code(code, language)
+        # print(result)
+        response = {'output': result}
+        return JsonResponse(response)
+
+    return render(request, 'projects/ai4code.html')

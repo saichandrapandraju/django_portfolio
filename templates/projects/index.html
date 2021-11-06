@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="{% static "css/live-resume.css" %}">
 </head>
 
-<body style="zoom: 115%">
+<body style="zoom: 110%">
     <header>
         <button class="btn btn-white btn-share ml-auto mr-5 ml-md-5 mr-md-auto invisible"><img src="{% static "images/share.svg" %}" alt="share" class="btn-img">
             SHARE</button>
@@ -32,41 +32,49 @@
         <main>
             <section class="portfolio-section">
                 <h2 class="section-title">PROJECTS</h2>
+                <p>Note: All of these projects were built using free online resources. So please be aware that each of these serves as a fun POC(Proof-Of-Concept) and can be improved with more data & infra.</p>
                 
                 <div class="portfolio-wrapper">
                     <figure class="portfolio-item hover-box">
+                        <a href="{% url 'projects:ai4code' %}"><img src="{% static "images/ai4code.png" %}" alt="project" class="portfolio-item-img">
+                        <figcaption class="portfolio-item-details overlay">
+                            <h5 class="portfolio-item-title">PROJECT 05</h5>
+                            <p class="portfolio-item-description">AI for Code</p>
+                        </figcaption></a>
+                    </figure>
+                    <figure class="portfolio-item hover-box">
                         <a href="{% url 'projects:qgen' %}"><img src="{% static "images/question.png" %}" alt="project" class="portfolio-item-img">
                         <figcaption class="portfolio-item-details overlay">
-                            <h5 class="portfolio-item-title">PROJECT 01</h5>
+                            <h5 class="portfolio-item-title">PROJECT 04</h5>
                             <p class="portfolio-item-description">Question Generator</p>
-                        </figcaption></a>
-                    </figure>
-                    <figure class="portfolio-item hover-box">
-                        <a href="{% url 'projects:agender' %}"><img src="{% static "images/agender.png" %}" alt="agender" class="portfolio-item-img">
-                        <figcaption class="portfolio-item-details overlay">
-                            <h5 class="portfolio-item-title">PROJECT 02</h5>
-                            <p class="portfolio-item-description">Gender and Age Recognition</p>
-                        </figcaption></a>
-                    </figure>
-                    <figure class="portfolio-item hover-box">
-                        <a href="{% url 'projects:traffic' %}"><img src="{% static "images/traffic.png" %}" alt="project" class="portfolio-item-img">
-                        <figcaption class="portfolio-item-details overlay">
-                            <h5 class="portfolio-item-title">PROJECT 03</h5>
-                            <p class="portfolio-item-description">Traffic Sign Recognition</p>
                         </figcaption></a>
                     </figure>
                     <figure class="portfolio-item hover-box">
                         <a href="{% url 'projects:en_2_in' %}"><img src="{% static "images/translate.png" %}" alt="project" class="portfolio-item-img">
                         <figcaption class="portfolio-item-details overlay">
-                            <h5 class="portfolio-item-title">PROJECT 04</h5>
-                            <p class="portfolio-item-description">English to Indian Language Translator</p>
+                            <h5 class="portfolio-item-title">PROJECT 03</h5>
+                            <p class="portfolio-item-description">English to Indian Language Translator (did during undergrad)</p>
                         </figcaption></a>
                     </figure>
                     <figure class="portfolio-item hover-box">
+                        <a href="{% url 'projects:traffic' %}"><img src="{% static "images/traffic.png" %}" alt="project" class="portfolio-item-img">
+                        <figcaption class="portfolio-item-details overlay">
+                            <h5 class="portfolio-item-title">PROJECT 02</h5>
+                            <p class="portfolio-item-description">Traffic Sign Recognition (did during undergrad)</p>
+                        </figcaption></a>
+                    </figure>
+                    <!-- <figure class="portfolio-item hover-box">
+                        <a href="{% url 'projects:agender' %}"><img src="{% static "images/agender.png" %}" alt="agender" class="portfolio-item-img">
+                        <figcaption class="portfolio-item-details overlay">
+                            <h5 class="portfolio-item-title">PROJECT 02</h5>
+                            <p class="portfolio-item-description">Gender and Age Recognition (did during undergrad)</p>
+                        </figcaption></a>
+                    </figure> -->
+                    <figure class="portfolio-item hover-box">
                         <a href="{% url 'projects:sketch' %}"><img src="{% static "images/sketch_pic.png" %}" alt="project" class="portfolio-item-img">
                         <figcaption class="portfolio-item-details overlay">
-                            <h5 class="portfolio-item-title">PROJECT 05</h5>
-                            <p class="portfolio-item-description">Image to Pencil Sketch</p>
+                            <h5 class="portfolio-item-title">PROJECT 01</h5>
+                            <p class="portfolio-item-description">Image to Pencil Sketch (did during undergrad)</p>
                         </figcaption></a>
                     </figure>
                 </div>

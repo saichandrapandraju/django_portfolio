@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Saichandra</title>
+    <link href="https://fonts.googleapis.com/css?family=Mukta:300,400,500,600,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static "vendors/@fortawesome/fontawesome-free/css/all.min.css" %}">
+    <link rel="stylesheet" href="{% static "css/live-resume.css" %}">
+</head>
+
+<body style="zoom: 115%">
+    <header>
+        <button class="btn btn-white btn-share ml-auto mr-5 ml-md-5 mr-md-auto invisible"><img src="{% static "images/share.svg" %}" alt="share" class="btn-img">
+            SHARE</button>
+        <nav class="collapsible-nav" id="collapsible-nav">
+            <a href="{% url 'index' %}" class="nav-link">HOME</a>
+            <a href="{% url 'resume' %}" class="nav-link">RESUME</a>
+            <a href="{% url 'projects' %}" class="nav-link active">PROJECTS</a>
+            <a href="{% url 'blogs' %}" class="nav-link">BLOG</a>
+            <a href="https://github.com/saichandrapandraju" target="_blank" class="nav-link" style="font-size:15px"><i class="fab fa-github"></i></a>
+            <a href="https://www.linkedin.com/in/saichandra-pandraju/" target="_blank" class="nav-link" style="font-size:15px"><i class="fab fa-linkedin-in"></i></a>
+        </nav>
+        <button class="btn btn-menu-toggle btn-white rounded-circle" data-toggle="collapsible-nav"
+            data-target="collapsible-nav"><img src="{% static "images/hamburger.svg" %}" alt="hamburger"></button>
+    </header>
+    <div class="content-wrapper">
+        <main>
+            <section class="portfolio-section">
+                <h2 class="section-title">AI for CODE</h2>
+            </section>
+            <section class="intro-section">
+                <p style="font-size: medium;">Let me give you a sneak peek at how AI can help with tasks involving code. Here I'll show you a couple of tasks - 'Translation' & 'Summarization'</p>
+                <p style="font-size: medium;">In case you are not sure about what these tasks are, here is a quick intro :
+                    <ul style="font-size: small;"><strong>Translation</strong> - Translates code from one language to another. This can be useful if there is a need to translate legacy code from one language to another. Here I'm considering translation between Java and C# (i.e, Java->C# and C#->Java).</ul>
+                    <ul style="font-size: small;"><strong>Summarization</strong> - Summarizes code to English Language. This can be useful for generating docstrings automatically. Here I'm considering 6 languages - 'Go', 'Java', 'JavaScript', 'PHP', 'Python', 'Ruby'.</ul>
+                </p>
+            </section>
+            <p>Note: This is just the tip of the iceberg. Currently there's a lot of research happening in this exciting area.</p>
+            <section class="contact-section">
+                <form method="POST" class="contact-form" id="ai4code_form">{% csrf_token %}
+                    <div class="form-group">
+                        <textarea name="code" id="code" class="form-control" placeholder="CODE*" rows="10" required="true">public static void calcTotal(double num_A,double num_B){
+                            double result;
+                            result=num_A+num_B;
+                            System.out.println("Sum of two numbers  "+result);
+}
+                            </textarea>
+                    </div>
+                        <div class="form-group">
+                            <select name="language" id="language">
+                                <option value="" disabled>Select Language:</option>
+                                <option value="cs">C#</option>
+                                <option value="go">Go</option>
+                                <option value="java" selected>Java</option>
+                                <option value="javascript">JavaScript</option>
+                                <option value="php">PHP</option>
+                                <option value="python">Python</option>
+                                <option value="ruby">Ruby</option>
+                            </select>
+                        </div>
+                        <div>
+                            <button type="submit" class="btn btn-primary form-submit-btn" >SUBMIT</button>
+                        </div>
+                        
+                    </form>
+            </section>
+            <div class="loader" id="loader"></div>
+            <p style="font-size: 10px;" id="time">This might take a minute...</p>
+            <!-- <h5 class="time-line-item-title" id="output"></h5><br> -->
+            <pre id="output" style="color: white;"></pre><br>
+            </main>
+    </div>
+    <script src="{% static "vendors/jquery/dist/jquery.min.js" %}"></script>
+    <script src="{% static "vendors/@popperjs/core/dist/umd/popper-base.min.js" %}"></script>
+    <script src="{% static "vendors/bootstrap/dist/js/bootstrap.min.js" %}"></script>
+    <script src="{% static "vendors/entry/jq.entry.min.js" %}"></script>
+    <script src="{% static "js/live-resume.js" %}"></script>
+    <script src="{% static "js/ai4code.js" %}"></script>
+
+</body>
+
+</html>

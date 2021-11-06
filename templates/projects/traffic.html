@@ -33,6 +33,7 @@
             <section class="portfolio-section">
                 <h2 class="section-title">Traffic Sign Recognition</h2>
             </section>
+            <p>Though it seems a naive image classification project, when you think of autonomous driving vehicles, this is an important module.</p>
             <section class="contact-section">
                 <form method="POST" class="contact-form" enctype="multipart/form-data" id="traffic_sign_form">{% csrf_token %}
                     <div class="form-group" style="align-items: center;">
@@ -53,7 +54,7 @@
 
             <br><br><br>
             <div class="loader" id="loader"></div>
-            <p style="font-size: 10px;" id="time">It may take ~15 secs...</p>
+            <p style="font-size: 10px;" id="time">This may take a minute...</p>
             <h5 class="time-line-item-title" id="output"></h5><br>
             <!-- {% if upload %}
                 <h6 class="time-line-item-title">PREDICTED SIGN : {{result}}</h6><br>
