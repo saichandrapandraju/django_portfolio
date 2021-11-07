@@ -1,7 +1,5 @@
-import os
-import re
-import json
-from transformers import T5ForConditionalGeneration, T5Tokenizer, MBartForConditionalGeneration, MBart50TokenizerFast
+import os, re, json, requests
+from transformers import T5ForConditionalGeneration, T5Tokenizer, MBart50TokenizerFast
 import tensorflow as tf
 import numpy as np
 import cv2
@@ -79,13 +77,16 @@ def detokenize_java(s):
 
 
 def generate_question(context, answer):
-    if 'pytorch_model.bin' not in os.listdir(qgen_model_path):
-        os.system(
-            f'wget --no-check-certificate https://storage.googleapis.com/portfoliomodels/qgen_base.bin --output-document={qgen_model_path}/pytorch_model.bin')
-    tokenizer = T5Tokenizer.from_pretrained(qgen_model_path)
-    model = T5ForConditionalGeneration.from_pretrained(qgen_model_path)
-
-    return tokenizer.batch_decode(model.generate(input_ids=tokenizer(f'qgen answer : {answer} context : {context}', return_tensors='pt').input_ids, num_beams=4), skip_special_tokens=True)[0]
+    try:
+        if 'pytorch_model.bin' not in os.listdir(qgen_model_path):
+            os.system(
+                f'wget --no-check-certificate https://storage.googleapis.com/portfoliomodels/qgen_base.bin --output-document={qgen_model_path}/pytorch_model.bin')
+        tokenizer = T5Tokenizer.from_pretrained(qgen_model_path)
+        model = T5ForConditionalGeneration.from_pretrained(qgen_model_path)
+        output = tokenizer.batch_decode(model.generate(input_ids=tokenizer(f'qgen answer : {answer} context : {context}', return_tensors='pt').input_ids, num_beams=4), skip_special_tokens=True)[0]
+    except:
+        output = 'Sorry, something went wrong...'
+    return output
 
 
 def predict_traffic_sign(img_path):
@@ -95,20 +96,24 @@ def predict_traffic_sign(img_path):
 
     height, width, data = 30, 30, []
 
-    image = cv2.imread(img_path)
-    image_from_array = Image.fromarray(image, 'RGB')
-    sized_image = image_from_array.resize((height, width))
-    data.append(np.array(sized_image))
+    try:
+        image = cv2.imread(img_path)
+        image_from_array = Image.fromarray(image, 'RGB')
+        sized_image = image_from_array.resize((height, width))
+        data.append(np.array(sized_image))
 
-    with open(os.path.join(traffic_sign_model_path, 'model.json'), 'r') as m_json:
-        loaded_model_json = m_json.read()
-    model = model_from_json(loaded_model_json)
-    model.load_weights(os.path.join(traffic_sign_model_path, "model.h5"))
+        with open(os.path.join(traffic_sign_model_path, 'model.json'), 'r') as m_json:
+            loaded_model_json = m_json.read()
+        model = model_from_json(loaded_model_json)
+        model.load_weights(os.path.join(traffic_sign_model_path, "model.h5"))
 
-    inp_img = np.array(data)
-    inp_img = inp_img.astype('float32')/255
-    pred = np.argmax(model.predict(inp_img), axis=-1)
-    return classes[str(pred[0]+1)]
+        inp_img = np.array(data)
+        inp_img = inp_img.astype('float32')/255
+        pred = np.argmax(model.predict(inp_img), axis=-1)
+        output = classes[str(pred[0]+1)]
+    except:
+        output = 'Sorry, something went wrong...'
+    return output
 
 
 def predict_agender(img_path):
@@ -117,13 +122,15 @@ def predict_agender(img_path):
 
 def en_2_in(en_txt):
 
-    if 'pytorch_model.bin' not in os.listdir(qgen_model_path):
-        os.system(
-            f'wget --no-check-certificate https://storage.googleapis.com/portfoliomodels/en_2_in.bin --output-document={en_2_in_model_path}/pytorch_model.bin')
+    tokenizer = MBart50TokenizerFast.from_pretrained(en_2_in_model_path, src_lang="en_XX")
+    API_TOKEN = os.environ.get('HF_API_KEY')
+    headers = {"Authorization": f"Bearer {API_TOKEN}"}
+    API_URL = "https://api-inference.huggingface.co/models/facebook/mbart-large-50-one-to-many-mmt"
 
-    model = MBartForConditionalGeneration.from_pretrained(en_2_in_model_path)
-    tokenizer = MBart50TokenizerFast.from_pretrained(
-        en_2_in_model_path, src_lang="en_XX")
+    def query(payload):
+        data = json.dumps(payload)
+        response = requests.request("POST", API_URL, headers=headers, data=data)
+        return json.loads(response.content.decode("utf-8"))
 
     lang_to_key = {
         "Gujarati": "gu_IN",
@@ -135,14 +142,21 @@ def en_2_in(en_txt):
         "Telugu": "te_IN"
     }
 
-    model_inputs = tokenizer(en_txt.strip(), return_tensors="pt")
     response = ""
     for k, v in lang_to_key.items():
-        generated_tokens = model.generate(
-            **model_inputs, forced_bos_token_id=tokenizer.lang_code_to_id[v])
-        out = tokenizer.batch_decode(
-            generated_tokens, skip_special_tokens=True)[0]
-        response += f"{k}: {out}\n"
+        try:
+            data = query({
+                  "inputs": en_txt.strip(),
+                  "parameters": {"forced_bos_token_id":tokenizer.lang_code_to_id[v]},
+                  })
+            response += f"{k}: {data[0]['generated_text']}\n\n"
+        except:
+            data = query({
+                  "inputs": en_txt.strip(),
+                  "parameters": {"forced_bos_token_id":tokenizer.lang_code_to_id[v]},
+                  "options":{"wait_for_model":True}
+                  })
+            response += f"{k}: {data[0]['generated_text']}\n\n"
     return response.strip()
 
 
