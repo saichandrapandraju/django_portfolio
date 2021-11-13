@@ -1,13 +1,11 @@
 import os, re, json, requests
-from transformers import T5ForConditionalGeneration, T5Tokenizer, MBart50TokenizerFast
-import tensorflow as tf
+from transformers import T5ForConditionalGeneration, T5Tokenizer, MBart50TokenizerFast, RobertaTokenizer
+# import tensorflow as tf
 import numpy as np
 import cv2
 from PIL import Image
 from keras.models import model_from_json
 import projects.javalang_tokenizer as javalang_tok
-from nltk.tokenize import word_tokenize
-from fairseq.models.transformer import TransformerModel
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -180,71 +178,65 @@ def sketch(img_path):
         os.remove(save_path)
         fimg.save(save_path)
         return save_path
-    except Exception as e:
+    except:
         return None
 
 
 def ai4code(code, language):
-    plbart_source = os.path.join(os.path.join(
-        BASE_DIR, 'projects'), 'plbart_source')
     result = ''''''
     if language == 'java':
-        paths = [f"{language}_en", f"{language}_cs"]
+        paths = [f"code_en", f"java_cs"]
         for path in paths:
-            # print(path)
             model_path = os.path.join(os.path.join(BASE_DIR, 'projects'), path)
-            if f'{path}.pt' not in os.listdir(model_path):
+            if 'pytorch_model.bin' not in os.listdir(model_path):
                 os.system(
-                f'wget --no-check-certificate https://storage.googleapis.com/portfoliomodels/{path}.pt --output-document={model_path}/{path}.pt')
+                f'wget --no-check-certificate https://storage.googleapis.com/portfoliomodels/{path}.bin --output-document={model_path}/pytorch_model.bin')
             try:
-                model = TransformerModel.from_pretrained(
-                    model_name_or_path=model_path, checkpoint_file=f'{path}.pt', data_name_or_path=model_path, bpe='sentencepiece', user_dir=plbart_source).eval()
-                tok_inp = ' '.join(word_tokenize(code.strip()))
-                translated = model.translate(tok_inp, beam=5)
-                translated = re.sub(r'`[ ]*`', '"', translated)
-                translated = re.sub(r"'[ ]*'", '"', translated)
-                if path == 'java_en':
-                    result += f"SUMMARY OF YOUR CODE : \n {translated.strip().strip('[en_XX]')}"
+                tokenizer = RobertaTokenizer.from_pretrained(model_path)
+                model = T5ForConditionalGeneration.from_pretrained(model_path)
+                tok_inp = tokenizer(code, return_tensors="pt").input_ids
+                generated_ids = model.generate(tok_inp, max_length=512)
+                translated = tokenizer.decode(generated_ids[0], skip_special_tokens=True)
+                if path == 'code_en':
+                    result += f"SUMMARY OF YOUR CODE : \n {translated.strip()}"
                 else:
-                    result += f"\nTRANSLATION TO C# : \n {detokenize_java(translated).strip()}"
-            except Exception as e:
+                    try:
+                        result += f"\nTRANSLATION TO C# : \n {detokenize_java(translated).strip()}"
+                    except:
+                        result += f"\nTRANSLATION TO C# : \n {translated}"
+            except:
                 result = "Sorry, something went wrong..."
         return result
     elif language == 'cs':
-        path = f"{language}_java"
+        path = f"cs_java"
         model_path = os.path.join(os.path.join(BASE_DIR, 'projects'), path)
-        if f'{path}.pt' not in os.listdir(model_path):
-            os.system(
-            f'wget --no-check-certificate https://storage.googleapis.com/portfoliomodels/{path}.pt --output-document={model_path}/{path}.pt')
+        if 'pytorch_model.bin' not in os.listdir(model_path):
+            os.system(f'wget --no-check-certificate https://storage.googleapis.com/portfoliomodels/{path}.bin --output-document={model_path}/pytorch_model.bin')
         try:
-            model = TransformerModel.from_pretrained(
-                model_name_or_path=model_path, checkpoint_file=f'{path}.pt', data_name_or_path=model_path, bpe='sentencepiece', user_dir=plbart_source).eval()
-            tok_inp = ' '.join(word_tokenize(code.strip()))
-            translated = model.translate(tok_inp, beam=5)
-            translated = re.sub(r'`[ ]*`', '"', translated)
-            translated = re.sub(r"'[ ]*'", '"', translated)
-            result += f"TRANSLATION TO JAVA : \n {detokenize_java(translated).strip()}"
-        except Exception as e:
+            tokenizer = RobertaTokenizer.from_pretrained(model_path)
+            model = T5ForConditionalGeneration.from_pretrained(model_path)
+            tok_inp = tokenizer(code, return_tensors="pt").input_ids
+            generated_ids = model.generate(tok_inp, max_length=512)
+            translated = tokenizer.decode(generated_ids[0], skip_special_tokens=True)
+            try:
+                result += f"TRANSLATION TO JAVA : \n {detokenize_java(translated).strip()}"
+            except:
+                result += f"TRANSLATION TO JAVA : \n {translated}"
+        except:
             result = "Sorry, something went wrong..."
         return result
     else:
-        path = f"{language}_en"
+        path = f"code_en"
         model_path = os.path.join(os.path.join(BASE_DIR, 'projects'), path)
-        if f'{path}.pt' not in os.listdir(model_path):
-            os.system(
-            f'wget --no-check-certificate https://storage.googleapis.com/portfoliomodels/{path}.pt --output-document={model_path}/{path}.pt')
-        plbart_source = None if path == 'python_en' else os.path.join(
-            os.path.join(BASE_DIR, 'projects'), 'plbart_source')
+        if 'pytorch_model.bin' not in os.listdir(model_path):
+            os.system(f'wget --no-check-certificate https://storage.googleapis.com/portfoliomodels/{path}.bin --output-document={model_path}/pytorch_model.bin')
         try:
-            model_path = os.path.join(
-                os.path.join(BASE_DIR, 'projects'), path)
-            model = TransformerModel.from_pretrained(
-                model_name_or_path=model_path, checkpoint_file=f'{path}.pt', data_name_or_path=model_path, bpe='sentencepiece', user_dir=plbart_source).eval()
-            tok_inp = ' '.join(word_tokenize(code.strip()))
-            translated = model.translate(tok_inp, beam=5)
-            translated = re.sub(r'`[ ]*`', '"', translated)
-            translated = re.sub(r"'[ ]*'", '"', translated)
-            result += f"SUMMARY OF YOUR CODE : \n {translated.strip().strip('[en_XX]')}"
-        except Exception as e:
+            tokenizer = RobertaTokenizer.from_pretrained(model_path)
+            model = T5ForConditionalGeneration.from_pretrained(model_path)
+            tok_inp = tokenizer(code, return_tensors="pt").input_ids
+            generated_ids = model.generate(tok_inp, max_length=512)
+            translated = tokenizer.decode(generated_ids[0], skip_special_tokens=True)
+            result += f"SUMMARY OF YOUR CODE : \n {translated.strip()}"
+        except:
             result = "Sorry, something went wrong..."
         return result
