@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Saichandra</title>
+    <link href="https://fonts.googleapis.com/css?family=Mukta:300,400,500,600,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static "vendors/@fortawesome/fontawesome-free/css/all.min.css" %}">
+    <link rel="stylesheet" href="{% static "css/live-resume.css" %}">
+</head>
+
+<body style="zoom: 115%">
+    <header>
+        <button class="btn btn-white btn-share ml-auto mr-5 ml-md-5 mr-md-auto invisible"><img src="{% static "images/share.svg" %}" alt="share" class="btn-img">
+            SHARE</button>
+        <nav class="collapsible-nav" id="collapsible-nav">
+            <a href="{% url 'index' %}" class="nav-link">HOME</a>
+            <a href="{% url 'resume' %}" class="nav-link">RESUME</a>
+            <a href="{% url 'projects' %}" class="nav-link">PROJECTS</a>
+            <a href="{% url 'blogs' %}" class="nav-link active" active>BLOGS</a>
+            <a href="https://github.com/saichandrapandraju" target="_blank" class="nav-link" style="font-size:15px"><i class="fab fa-github"></i></a>
+            <a href="https://www.linkedin.com/in/saichandra-pandraju/" target="_blank" class="nav-link" style="font-size:15px"><i class="fab fa-linkedin-in"></i></a>
+        </nav>
+        <button class="btn btn-menu-toggle btn-white rounded-circle" data-toggle="collapsible-nav"
+            data-target="collapsible-nav"><img src="{% static "images/hamburger.svg" %}" alt="hamburger"></button>
+    </header>
+    <div class="content-wrapper">
+        <main>
+            <section class="intro-section">
+                <h2 class="section-title">Federated Learning using IBMFL</h2>
+                <p><em>A python framework for federated learning (FL) in an enterprise environment.</em></p>
+                <p>Modern mobile devices have access to a wealth of data suitable for learning models, which in turn can greatly improve the user experience on the device. For example, language models can improve speech recognition and text entry, and image models can automatically select good photos. Standard machine learning approaches require centralizing the training data on one machine or in a datacenter. This rich data is often privacy sensitive, large in quantity, or both. Due to these reasons it becomes difficult to access this data.</p>
+                <p><a href="https://arxiv.org/pdf/1602.05629.pdf" target="_blank">Federated Learning</a> enables the devices to collaboratively learn a shared prediction model while keeping all the training data on device, thus removing the need for centralizing the data. Federated Learning allows for smarter models, lower latency, and less power consumption, all while ensuring privacy.</p>
+                <img class="rounded mx-auto d-block" src="{% static "images/fl_ibm.png" %}" alt="IBM_FL"><br>
+                <p>Federated Learning solves a bunch of problems like:</p>
+                <ul>
+                    <li><p>Training on real-world data from mobile devices provides a distinct advantage over training on proxy data that is generally available in the data center.</p></li>
+                    <li><p>Data which is privacy sensitive or large in size (compared to the size of the model), so it is preferable not to log it to the data center purely for the purpose of model training .</p></li>
+                    <li><p>For supervised tasks, labels on the data can be inferred naturally from user interaction.</p></li>
+                </ul>
+                <h4>IBM Federated Learning</h4>
+                <p><a href="https://github.com/IBM/federated-learning-lib" target="_blank">IBM federated learning</a> is a Python framework for federated learning (FL) in an enterprise environment where each participant node (or party) retains data locally and interacts with the other participants via a learning protocol. IBM federated learning provides a basic fabric for FL, to which advanced features can be added. It is not dependent on any specific machine learning framework and supports different learning topologies, e.g., a shared aggregator, and protocols. It supports <a href="https://github.com/IBM/federated-learning-lib/blob/main/README.md#supported-functionality" target="_blank">Deep Neural Networks (DNNs)</a> as well as classic machine learning techniques such as linear regression and k-means. This comprises supervised and unsupervised approaches as well as reinforcement learning.</p>
+                <h5>Aggregator and Party Configuration</h5>
+                <p>IBM federated learning offers as abstraction an Aggregator and Parties (as shown in the below fig.) so that a group of parties can collaboratively learn a machine learning model (usually referred to as a global model) without revealing their raw data to each other. For most federated learning algorithms, only model updates, e.g., model weights, are shared with the aggregator. The aggregator then learns a global model by aggregating the information provided by parties. We now introduce these two abstractions in IBM FL.</p>
+                <img class="rounded mx-auto d-block" src="{% static "images/ibmfl_network.png" %}" alt="ibmfl_network"><br>
+                <p>The <em>aggregator</em> is in charge of running the <em>Fusion Algorithm</em>. A fusion algorithm queries the registered parties to carry out the federated learning training process. The queries sent vary according to the model/algorithm type. In return, parties send their replies as a <em>model update</em> object, and these model updates are then aggregated according to the specified fusion algorithm, specified via a <em>Fusion Handler</em> class.</p>
+                <p>Each <em>party</em> holds its own dataset that is kept to itself and used to answer queries received from the aggregator. Because each party may have stored data in different formats, IBM FL offers an abstraction called <em>Data Handler</em>. This module allows for custom implementations to retrieve the data from each of the participating parties. A <em>Local Training Handler</em> sits at each party to control the local training happening at the party side.</p>
+                <p>The aggregator and parties communicate through flask-based servers. All messages and communication are handled by protocol handler and connection modules. IBM FL is designed to allow different modules to be swapped in and out without interfering with the functionality of other components. Users can configure these components via configuration files (.yml files) for the aggregator and each party. The following is a list of building blocks that may appear in the configuration files.</p>
+                <p><strong>Connection:</strong> Connection types for communication between the aggregator and each registered party. It includes information needed to initiate the connection, in particular, flask server information, flask connection location, and a synchronization mode flag (sync) for training phase.</p>
+                <p><strong>Data:</strong> Data preparation and pre-processing. It includes information needed to initiate a data handler class, in particular, a given data path, a data handler class name and location.</p>
+                <p><strong>Fusion:</strong> Fusion algorithm to be performed at the aggregator. It includes information needed to initiate a fusion algorithm at the aggregator side, in particular, a fusion handler class name and location.</p>
+                <p><strong>Local_training:</strong> Local training algorithm happened at the party side. It includes information needed to initiate a local training handler at the party side, in particular, a local training handler class name and location.</p>
+                <p><strong>Hyperparams:</strong> It includes global training and local training hyperparameters.</p>
+                <p><strong>Model:</strong> Definition of the machine learning model to be trained. It includes information needed to initiate a machine learning model and its corresponding functionality, like train, predict, evaluate and save, etc. It includes a model class name and location, and a given model specification path.</p>
+                <p><strong>Protocol_handler:</strong> Handling the protocol for message exchange. It includes information needed to initiate a protocol, in particular, a protocol handler class name and location.</p>
+                <p><strong>Aggregator:</strong> aggregator server information (only for the parties’ configuration file).</p>
+                <p>We will use IBM FL to have multiple parties <a href="https://github.com/IBM/federated-learning-lib/tree/main/Notebooks/keras_classifier" target="_blank">train a classifier</a> to recognize handwritten digits in the <a href="http://yann.lecun.com/exdb/mnist/" target="_blank">MNIST dataset</a>. We will be looking at problem to recognize digits from these tens of thousands of handwritten images.</p>
+                <h5>Steps involved</h5>
+                <p>1) We begin by setting the number of parties that will participate in the federated learning run and splitting up the data among them.</p>
+                <p>2) Prepare datasets for each participating parties. We are going to assume that the parties and the aggregator are run in the same machine. (if you want to try this in different machines, you can assign samples for each party locally.)</p>
+                <p>3) Define model specification and create configuration files for the aggregator and parties.</p>
+                <p>The following YAML file is an example of the aggregator’s configuration file. In this example, flask is used as our connection type, and simple average fusion algorithm (select IterAvgFusionHandler in fusion section) to train the model. Moreover, the global training round is set as 3 and each global training round triggers parties to perform 3 local training epochs. Also the default protocol is used for the aggregator. Note that the aggregator does not specify a data file (data section) or maintain a global model (model section). Hence, during the federated learning process, it only keeps track of the current model parameters, i.e., current weights of the neural network. However, it is possible that the aggregator also has data for testing purposes and maintains a global model. When this is the case, one needs to add data and model sections in the configuration file.</p>
+                <img class="rounded mx-auto d-block" src="{% static "images/ibmfl_agg.png" %}" alt="ibmfl_aggregator"><br>
+                <p>The following YAML file(Fig4) is an example of the party’s configuration file. In this example, a flask connection is selected, therefore, the aggregator server information will be provided in the aggregator section. The party also specifies its data information in the data section, and in the model section, the Keras model definition is given as an .h5 file. Moreover, for simple average fusion algorithm, please select LocalTrainingHandler in local_training section. The default protocol is selected for parties' protocol.</p>
+                <img class="rounded mx-auto d-block" src="{% static "images/ibmfl_party.png" %}" alt="ibmfl_party"><br>
+                <p>4) Now pass the configuration parameters set to instantiate the Aggregator object and start the aggregator.</p>
+                <p>5) Start and register parties.</p>
+                <p>6) Initiate training from the aggregator. This will have 2 parties join the training and run 3 global rounds, each round with 3 local epochs.</p>
+                <p>7) Terminate the aggregator and parties processes. Remember to terminate the aggregator's and parties' processes and exit.</p>
+                <h5>Summary</h5>
+                <p>Applying Federated Learning requires machine learning practitioners to adopt new tools and a new way of thinking: model development, training, and evaluation with no direct access to or labeling of raw data, with communication cost as a limiting factor. The system needs to communicate and aggregate the model updates in a secure, efficient, scalable, and fault-tolerant way. It’s only the combination of research with this infrastructure that makes the benefits of Federated Learning possible.</p>
+            </section>
+        </main>
+    </div>
+    <script src="{% static "vendors/jquery/dist/jquery.min.js" %}"></script>
+    <script src="{% static "vendors/@popperjs/core/dist/umd/popper-base.min.js" %}"></script>
+    <script src="{% static "vendors/bootstrap/dist/js/bootstrap.min.js" %}"></script>
+    <script src="{% static "vendors/entry/jq.entry.min.js" %}"></script>
+    <script src="{% static "js/live-resume.js" %}"></script>
+</body>
+
+</html>

@@ -21,7 +21,7 @@
             <a href="{% url 'index' %}" class="nav-link">HOME</a>
             <a href="{% url 'resume' %}" class="nav-link">RESUME</a>
             <a href="{% url 'projects' %}" class="nav-link">PROJECTS</a>
-            <a href="{% url 'blogs' %}" class="nav-link active" active>BLOG</a>
+            <a href="{% url 'blogs' %}" class="nav-link active" active>BLOGS</a>
             <a href="https://github.com/saichandrapandraju" target="_blank" class="nav-link" style="font-size:15px"><i class="fab fa-github"></i></a>
             <a href="https://www.linkedin.com/in/saichandra-pandraju/" target="_blank" class="nav-link" style="font-size:15px"><i class="fab fa-linkedin-in"></i></a>
         </nav>
@@ -32,9 +32,9 @@
         <main>
             <section class="blog-section">
                 
-                <div class="blog-posts-wrapper" style="justify-content: center;">
-                    coming soon...
-                    <!-- <article class="blog-post">
+                <div class="blog-posts-wrapper">
+                    <!-- coming soon... -->
+                    <article class="blog-post">
                         <a href="{% url 'blogs:tf' %}" class="blog-post-link">
                             <img src="{% static "images/tensorflow.png" %}" alt="TensorFlow" class="blog-post-thumbnail">
                             <h5 class="blog-post-title">How and Why I became TensorFlow certified developer</h5>
@@ -44,55 +44,32 @@
                         </p>
                     </article>
                     <article class="blog-post">
-                        <a href="#!" class="blog-post-link">
-                            <img src="{% static "images/News_2.jpg" %}" alt="news 2" class="blog-post-thumbnail">
-                            <h5 class="blog-post-title">Design Conferences in 2019</h5>
+                        <a href="{% url 'blogs:xai' %}" class="blog-post-link">
+                            <img src="{% static "images/ex_ai.png" %}" alt="Explainable AI" class="blog-post-thumbnail">
+                            <h5 class="blog-post-title">Explainability and Interpretability with SHAP and LIT for Language Models</h5>
                         </a>
                         <p class="blog-post-meta">
-                            <span class="post-published-date">28 DEC 2019</span>
-                            <a href="#!" class="post-comments">3 COMMENTS</a>
+                            <span class="post-published-date">JUN 2021</span>
                         </p>
                     </article>
                     <article class="blog-post">
-                        <a href="#!" class="blog-post-link">
-                            <img src="{% static "images/News_3.jpg" %}" alt="news 3" class="blog-post-thumbnail">
-                            <h5 class="blog-post-title">Design Conferences in 2019</h5>
+                        <a href="{% url 'blogs:ibmfl' %}" class="blog-post-link">
+                            <img src="{% static "images/fl.png" %}" alt="Federated Learning" class="blog-post-thumbnail">
+                            <h5 class="blog-post-title">Federated Learning using IBMFL</h5>
                         </a>
                         <p class="blog-post-meta">
-                            <span class="post-published-date">28 DEC 2019</span>
-                            <a href="#!" class="post-comments">3 COMMENTS</a>
+                            <span class="post-published-date">JUL 2021</span>
                         </p>
                     </article>
                     <article class="blog-post">
-                        <a href="#!" class="blog-post-link">
-                            <img src="{% static "images/News_4.jpg" %}" alt="news 4" class="blog-post-thumbnail">
-                            <h5 class="blog-post-title">Design Conferences in 2019</h5>
+                        <a href="{% url 'blogs:aif' %}" class="blog-post-link">
+                            <img src="{% static "images/aif.png" %}" alt="AI Fairness" class="blog-post-thumbnail">
+                            <h5 class="blog-post-title">AI Fairness - A Brief Introduction to AI Fairness 360</h5>
                         </a>
                         <p class="blog-post-meta">
-                            <span class="post-published-date">28 DEC 2019</span>
-                            <a href="#!" class="post-comments">3 COMMENTS</a>
+                            <span class="post-published-date">JUN 2021</span>
                         </p>
                     </article>
-                    <article class="blog-post">
-                        <a href="#!" class="blog-post-link">
-                            <img src="{% static "images/News_5.jpg" %}" alt="news 5" class="blog-post-thumbnail">
-                            <h5 class="blog-post-title">Design Conferences in 2019</h5>
-                        </a>
-                        <p class="blog-post-meta">
-                            <span class="post-published-date">28 DEC 2019</span>
-                            <a href="#!" class="post-comments">3 COMMENTS</a>
-                        </p>
-                    </article>
-                    <article class="blog-post">
-                        <a href="#!" class="blog-post-link">
-                            <img src="{% static "images/News_6.jpg" %}" alt="news 6" class="blog-post-thumbnail">
-                            <h5 class="blog-post-title">Design Conferences in 2019</h5>
-                        </a>
-                        <p class="blog-post-meta">
-                            <span class="post-published-date">28 DEC 2019</span>
-                            <a href="#!" class="post-comments">3 COMMENTS</a>
-                        </p>
-                    </article> -->
                 </div>
             </section>
         </main>

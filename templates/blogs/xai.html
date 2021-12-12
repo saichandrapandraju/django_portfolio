@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Saichandra</title>
+    <link href="https://fonts.googleapis.com/css?family=Mukta:300,400,500,600,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static "vendors/@fortawesome/fontawesome-free/css/all.min.css" %}">
+    <link rel="stylesheet" href="{% static "css/live-resume.css" %}">
+</head>
+
+<body style="zoom: 115%">
+    <header>
+        <button class="btn btn-white btn-share ml-auto mr-5 ml-md-5 mr-md-auto invisible"><img src="{% static "images/share.svg" %}" alt="share" class="btn-img">
+            SHARE</button>
+        <nav class="collapsible-nav" id="collapsible-nav">
+            <a href="{% url 'index' %}" class="nav-link">HOME</a>
+            <a href="{% url 'resume' %}" class="nav-link">RESUME</a>
+            <a href="{% url 'projects' %}" class="nav-link">PROJECTS</a>
+            <a href="{% url 'blogs' %}" class="nav-link active" active>BLOGS</a>
+            <a href="https://github.com/saichandrapandraju" target="_blank" class="nav-link" style="font-size:15px"><i class="fab fa-github"></i></a>
+            <a href="https://www.linkedin.com/in/saichandra-pandraju/" target="_blank" class="nav-link" style="font-size:15px"><i class="fab fa-linkedin-in"></i></a>
+        </nav>
+        <button class="btn btn-menu-toggle btn-white rounded-circle" data-toggle="collapsible-nav"
+            data-target="collapsible-nav"><img src="{% static "images/hamburger.svg" %}" alt="hamburger"></button>
+    </header>
+    <div class="content-wrapper">
+        <main>
+            <section class="intro-section">
+                <h2 class="section-title">Explainability and Interpretability with SHAP and LIT for Language Models</h2><br>
+                <p>This article explains how to use <a href="https://github.com/slundberg/shap" target="_blank">SHAP</a> and <a href="https://github.com/pair-code/lit" target="_blank">LIT</a> to better understand the language models predictions thereby getting the valuable insights to improve them further.</p>
+                <img class="rounded mx-auto d-block" src="{% static "images/xai.png" %}" alt="xai"><br>
+                <p class="resume-section section-title">SHapley Additive exPlanations (SHAP):</p>
+                <p>The ability to correctly interpret a prediction model’s output is extremely important. It engenders appropriate user trust, provides insight into how a model may be improved, and supports understanding of the process being modeled. In some applications, simple models (e.g., linear models) are often preferred for their ease of interpretation, even if they may be less accurate than complex ones. However, the growing availability of big data has increased the benefits of using complex models, so bringing to the forefront the trade-off between accuracy and interpretability of a model’s output. There are a few methods prior to SHAP like LIME, DeepLIFT which address this problem. But an understanding of how these methods relate and when one method is preferable to another is lacking.</p>
+                <p>SHAP present a novel unified approach for interpreting model predictions by unifying most of the previous methods. SHAP assigns each feature an importance value for a particular prediction. This resulted improved computational performance and/or better consistency with human intuition than previous approaches.</p>
+                <p>Let us apply SHAP for interpreting Language Models for classification and generation tasks —</p>
+                <h5>SHAP for Classification:</h5>
+                <p>For this example, let us consider multiclass (6) classification ‘emotion’ dataset from <a href="https://huggingface.co/datasets/emotion" target="_blank">HuggingFace(HF) Datasets</a> and explore the predictions of ‘nateraw/bert-base-uncased-emotion’ <a href="https://huggingface.co/nateraw/bert-base-uncased-emotion" target="_blank">model</a> which is already fine-tuned on ‘emotion’ dataset. This dataset contain ‘text’ input and ‘emotion’ label and here is the distribution of the labels —</p>
+                <img class="rounded mx-auto d-block" src="{% static "images/shap_ds_dist.png" %}" alt="ds_distribution"><br>
+                <p>Once model and tokenizer were loaded, we have to wrap these with ‘shap.Explainer’ as shown below —</p>
+                <pre style="color: white;">
+        tokenizer = AutoTokenizer.from_pretrained("nateraw/bert-base-uncased-emotion",use_fast=True)
+        model = AutoModelForSequenceClassification.from_pretrained("nateraw/bert-base-uncased-emotion").cuda()
+
+        def f(x):
+            tv = torch.tensor([tokenizer.encode(v, padding='max_length', max_length=128,truncation=True) for v in x]).cuda()
+            attention_mask = (tv!=0).type(torch.int64).cuda()
+            outputs = model(tv,attention_mask=attention_mask)[0].detach().cpu().numpy()
+            scores = (np.exp(outputs).T / np.exp(outputs).sum(-1)).T
+            val = sp.special.logit(scores) 
+            return val
+            
+        explainer = shap.Explainer(f,tokenizer,output_names=labels)
+                </pre>
+
+                <p>‘explainer’ is used to calculate ‘shap_values’ which in turn is used to plot variety of graphs to assess the predictions. Here is an example where first 50 samples of the dataset is passed to explainer.</p>
+                <pre style="color: white;">
+        shap_values = explainer(data['text'][0:50])
+                </pre>
+
+                <p>We can get explore dataset level feature impact scores using these shap_values for each class. Here is an example for plotting top features by magnitude for ‘joy’ class in 50 samples that we passed to explainer.</p>
+                <pre style="color: white;">
+        shap.plots.bar(shap_values[:,:,"joy"].mean(0))
+                </pre>
+                <img class="rounded mx-auto d-block" src="{% static "images/shap_top.png" %}" alt="top_features"><br>
+                <p>Top features that are positively impacting the ‘joy’ class :</p>
+                <pre style="color: white;">
+        shap.plots.bar(shap_values[:,:,"joy"].mean(0)
+        order=shap.Explanation.argsort.flip)
+                </pre>
+                <img class="rounded mx-auto d-block" src="{% static "images/shap_top_pos.png" %}" alt="top_positive_features"><br>
+                <p>Top features that are negatively impacting the ‘joy’ class :</p>
+                <pre style="color: white;">
+        shap.plots.bar(shap_values[:,:,"joy"].mean(0)
+        order=shap.Explanation.argsort)
+                </pre>
+                <img class="rounded mx-auto d-block" src="{% static "images/shap_top_neg.png" %}" alt="top_negative_features"><br>
+                <p>The above plots gives the overall idea of what words are considered important for a particular class. But to check the individual sample, there are other kinds of interactive plots.</p>
+                <p>If we want to check the performance of the model for all the classes visually, here is an example for last two samples —</p>
+                <pre style="color: white;">
+        shap.plots.text(shap_values[-2:])
+                </pre>
+                <img class="rounded mx-auto d-block" src="{% static "images/shap_interactive.png" %}" alt="shap_interactive"><br>
+                <p>In the above plot, ‘Input Text’ is self-explanatory and ‘Output Text’ is the space-separated class names and we can hover on any of the class name which highlights(red- positive impact; blue- negative impact) the parts of input text that contributed the most.</p>
+                <img class="rounded mx-auto d-block" src="{% static "images/shap_hover.png" %}" alt="shap_hover"><br>
+                <p>If we have a sentence and want to check the impact of phrases for a particular prediction, again ‘shap_values’ comes to rescue as shown below —</p>
+                <p><em>Note: I took ‘IMDB’ dataset for this example as ‘input text’ is longer.</em></p>
+                <pre style="color: white;">
+        shap.plots.text(shap_values[:,:,"POSITIVE"])
+                </pre>
+                <img class="rounded mx-auto d-block" src="{% static "images/shap_phrase.png" %}" alt="shap_phrase"><br>
+                <h5>SHAP for Generation:</h5>
+                <p>For Generation, each token generated is based on the gradients of input tokens and this is visualized accurately with the heatmap that we used earlier.</p>
+                <p>Here is the example for summarization with ‘distilbart’—</p>
+                <pre style="color: white;">
+    s = dataset['document'][0:1]
+    explainer = shap.Explainer(model,tokenizer)
+    shap.plots.text(shap_values)
+                </pre>
+                <img class="rounded mx-auto d-block" src="{% static "images/shap_generation.png" %}" alt="shap_generation"><br>
+                <p>Here is the example for open-ended text generation with ‘gpt-2’ —</p>
+                <pre style="color: white;">
+    explainer = shap.Explainer(model,tokenizer)
+    s = ['Two Muslims']
+    shap_values = explainer(s)
+    shap.plots.text(shap_values)
+                </pre>
+                <img class="rounded mx-auto d-block" src="{% static "images/shap_toxic.png" %}" alt="shap_toxic"><br>
+                <p>If the input prompt is ‘Two Muslims’, see how generated text is related to violence. This is more evident if we hover on ‘killed’ as it is highlighting that because of ‘Muslims’ in input, it generated ‘killed’. This is the negative side of these huge language models. You can find same issue in GPT-3 <a href="https://twitter.com/abidlabs/status/1291165311329341440?lang=en" target="_blank">here</a>.</p>
+                <p class="resume-section section-title">Language Interpretability Tool(LIT):</p>
+                <p>The Language Interpretability Tool (LIT) is for researchers and practitioners looking to understand NLP model behavior through a visual, interactive, and extensible tool.</p>
+                <p>Use LIT to ask and answer questions like:</p>
+                <ul>
+                    <li><p>What kind of examples does my model perform poorly on?</p></li>
+                    <li><p>Why did my model make this prediction? Can it attribute it to adversarial behavior, or undesirable priors from the training set?</p></li>
+                    <li><p>Does my model behave consistently if I change things like textual style, verb tense, or pronoun gender?</p></li>
+                </ul>
+                <p>LIT contains many built-in capabilities but is also customizable, with the ability to add custom interpretability techniques, metrics calculations, counterfactual generators, visualizations, and more.</p>
+                <p>The biggest advantage of LIT is its interactive UI where you can compare multiple models, change data sample on the fly, visualize all the predictions in a 3-d space which gives a very good idea of the model performance.</p>
+                <p>Here is the general layout of the LIT —</p>
+                <img class="rounded mx-auto d-block" src="{% static "images/LIT.png" %}" alt="Language Interpretability Tool"><br>
+                <p>A detailed user guide for the layout is <a href="https://github.com/PAIR-code/lit/blob/main/documentation/ui_guide.md" target="_blank">here</a> to get familiarize with this UI.</p>
+                <p>On a first glance, we can notice the ‘Embeddings’ section which is nothing but the model predictions for all the data samples and is colored based on label and projected in a 3-d space. This quickly explains that my model is performing good as orange and blue are segregated decently.</p>
+                <p>‘Data Table’ section shows all the data points and their respective labels, predictions etc. With ‘Datapoint Editor’, one can quickly edit a data sample (may be changing the gender to examine the model bias) and compare it with original sample. We can also add new data samples to the dataset.</p>
+                <p>‘Performance’ tab shows the accuracy, precision, recall, f1 and confusion matrix of the model without we explicitly calculating them.</p>
+                <p>‘Performance’ tab shows the spread of all data points as shown below —</p>
+                <img class="rounded mx-auto d-block" src="{% static "images/lit_performance.png" %}" alt="lit_performance"><br>
+                <p>‘Explanations’ tab gives various types of gradient weights that correspond to a particular prediction. Here is an example for wrong prediction —</p>
+                <img class="rounded mx-auto d-block" src="{% static "images/lit_explain.png" %}" alt="lit_explain"><br>
+                <p>As model predicted this sample wrong with an accuracy of 85%, we can explore the gradients which gives the reason why model predicted wrong and which tokens correspond to this prediction. By using ‘LIME’ explanation, it is clear that words such as never, loses, grim, situation have higher -ve scores and these made the overall prediction got towards -ve side because of which the prediction if ‘0’.</p>
+                <p>‘Counterfactuals’ is used to replace some words in data points and we can also scramble words in an example.</p>
+                <img class="rounded mx-auto d-block" src="{% static "images/lit_counterfactuals.png" %}" alt="lit_counterfactuals"><br>
+                <p>More such demos for classification, regression, summarization, gender bias and using LIT in notebooks can be found <a href="https://pair-code.github.io/lit/demos/" target="_blank">here</a>.</p>
+                <p>But to make LIT work for custom models and datasets, we have to make a few code changes and <a href="https://github.com/transformernlp/explainablility/blob/main/lit_custom_news_classification.ipynb" target="_blank">this</a> notebook explains it all by training a ‘DistilBert’ model on ‘news classification’ dataset, integrates both into LIT and rendering LIT UI in notebook itself !!</p>
+                <p class="resume-section section-title">SHAP vs LIT:</p>
+                <p>As we have seen the capabilities of both SHAP and LIT, the immediate question that pops is ‘What should I use?’</p>
+                <p>This can be answered by considering the bigger picture as follows —</p>
+                <p><em>If I want to know the most important tokens of the dataset for the model predictions or if I have to assess the model for all the available classes, then I have to consider <strong>SHAP</strong>.</em></p>
+                <p><em>But if I want to visualize predictions, gradients, add/change/compare data points on the fly, then I have to consider <strong>LIT</strong>.</em></p>
+            </section>
+        </main>
+    </div>
+    <script src="{% static "vendors/jquery/dist/jquery.min.js" %}"></script>
+    <script src="{% static "vendors/@popperjs/core/dist/umd/popper-base.min.js" %}"></script>
+    <script src="{% static "vendors/bootstrap/dist/js/bootstrap.min.js" %}"></script>
+    <script src="{% static "vendors/entry/jq.entry.min.js" %}"></script>
+    <script src="{% static "js/live-resume.js" %}"></script>
+</body>
+
+</html>

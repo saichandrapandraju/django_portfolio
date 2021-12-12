@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Saichandra</title>
+    <link href="https://fonts.googleapis.com/css?family=Mukta:300,400,500,600,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static "vendors/@fortawesome/fontawesome-free/css/all.min.css" %}">
+    <link rel="stylesheet" href="{% static "css/live-resume.css" %}">
+</head>
+
+<body style="zoom: 115%">
+    <header>
+        <button class="btn btn-white btn-share ml-auto mr-5 ml-md-5 mr-md-auto invisible"><img src="{% static "images/share.svg" %}" alt="share" class="btn-img">
+            SHARE</button>
+        <nav class="collapsible-nav" id="collapsible-nav">
+            <a href="{% url 'index' %}" class="nav-link">HOME</a>
+            <a href="{% url 'resume' %}" class="nav-link">RESUME</a>
+            <a href="{% url 'projects' %}" class="nav-link">PROJECTS</a>
+            <a href="{% url 'blogs' %}" class="nav-link active" active>BLOGS</a>
+            <a href="https://github.com/saichandrapandraju" target="_blank" class="nav-link" style="font-size:15px"><i class="fab fa-github"></i></a>
+            <a href="https://www.linkedin.com/in/saichandra-pandraju/" target="_blank" class="nav-link" style="font-size:15px"><i class="fab fa-linkedin-in"></i></a>
+        </nav>
+        <button class="btn btn-menu-toggle btn-white rounded-circle" data-toggle="collapsible-nav"
+            data-target="collapsible-nav"><img src="{% static "images/hamburger.svg" %}" alt="hamburger"></button>
+    </header>
+    <div class="content-wrapper">
+        <main>
+            <section class="intro-section">
+                <h2 class="section-title">AI Fairness - A Brief Introduction to AI Fairness 360</h2>
+                <p>Fairness is becoming one of the most popular topics in machine learning in recent years. There are several newly uploaded papers on Fairness on arxiv every week. But, the first thing to ask is why is fairness so important? We are at an age where to automate most of our tasks, we have become ml dependent. Companies like Amazon using their recommender systems to recommend different items to different groups of people, Netflix customizing their pages based on users, Chatbots, self driven cars, employers using ML systems to select candidates, courts in United States use COMPAS algorithm for recidivism prediction. Machine learning systems have become inseparable part of our lives and are becoming more widely used in near future.</p>
+                <p>AI is good but it can be incorrect as well. Any machine learning system is as good as the data on which it is trained on. Machine learning discovers and generalizes patterns in the data and could, therefore, replicate bias. It has been found in 2016 that COMPAS, the algorithm used for recidivism prediction produces much higher false positive rate for black people than white people(see below fig., <a href="https://www.propublica.org/article/machine-bias-risk-assessments-in-criminal-sentencing" target="_blank">Larson et al. ProPublica, 2016</a>.</p>
+                <p><a href="https://arxiv.org/pdf/1602.05629.pdf" target="_blank">Federated Learning</a> enables the devices to collaboratively learn a shared prediction model while keeping all the training data on device, thus removing the need for centralizing the data. Federated Learning allows for smarter models, lower latency, and less power consumption, all while ensuring privacy.</p>
+                <img class="rounded mx-auto d-block" src="{% static "images/aif_compas.png" %}" alt="aif_compas"><br>
+                <p>A few more example are, <a href="https://www.reuters.com/article/us-amazon-com-jobs-automation-insight/amazon-scraps-secret-ai-recruiting-tool-that-showed-bias-against-women-idUSKCN1MK08G" target="_blank">Amazon’s hiring algorithm</a> that favored men, <a href="https://www.theguardian.com/technology/2019/mar/28/facebook-ads-housing-discrimination-charges-us-government-hud" target="_blank">Facebook’s charge of housing discrimination in targeted ads</a>, or this prominent <a href="https://science.sciencemag.org/content/366/6464/447" target="_blank">healthcare algorithm</a> that exhibited significant racial bias.</p>
+                <p>When implementing these models at scale, it can result in a large number of biased decisions, harming a large number of users.</p>
+                <h4>Sources of bias</h4>
+                <p>Algorithms by themselves do not have any intrinsic prejudices but can learn to exhibit discriminatory behaviors when presented with inappropriate data. Below are a few data quality issues that contribute to bias:</p>
+                <ul>
+                    <li><p>Insufficient data: When the dataset contains too few samples overall or for certain minority groups. Insights from the models trained on this kind of data are not dependable and caution should be exercised when pertaining to use cases that directly impact individuals.</p></li>
+                    <li><p>Data collection: Bias is introduced due to technologies, or humans, used in collecting the data, e.g. the tool is only available in a specific language. It could be a consequence of the sampling strategy, e.g. insufficient representation of a sub-population is collected.</p></li>
+                    <li><p>Historical bias: A significant difference in the target distribution for different groups can be due to underlying human prejudices in the data. A few of the well-known examples are discrimination in hiring, loan discrimination practices or bias in judicial sentencing.</p></li>
+                </ul>
+                <p>For the task of bias detection and mitigation there are a few open source libraries available like IBM’s AI Fairness 360, Audit-AI developed by team at Pymetrics, Fairlearn, Fairml, Google’s what if tool.</p>
+                <h3>AI Fairness 360</h3>
+                <p>The <a href="https://github.com/Trusted-AI/AIF360" target="_blank">AI Fairness 360</a> toolkit is an extensible open-source library containing techniques developed by the research community to help detect and mitigate bias in machine learning models throughout the AI application lifecycle. AI Fairness 360 package is available in both Python and R.</p>
+                <p>The AI Fairness 360 package includes</p>
+                <p>1. A comprehensive set of metrics for datasets and models to test for biases,</p>
+                <p>2. Explanations for these metrics, and</p>
+                <p>3. Algorithms to mitigate bias in datasets and models. It is designed to translate algorithmic research from the lab into the actual practice of domains as wide-ranging as finance, human capital management, healthcare, and education. We invite you to use it and improve it.</p>
+                <h5>Definitions</h5>
+                <p><strong>Fairness metric:</strong> A quantification of unwanted bias in training data or models.</p>
+                <p><strong>Favorable label:</strong> A label whose value corresponds to an outcome that provides an advantage to the recipient. The opposite is an unfavorable label.</p>
+                <p><strong>Group fairness:</strong> The goal of groups defined by protected attributes receiving similar treatments or outcomes.</p>
+                <p><strong>Individual fairness:</strong> The goal of similar individuals receiving similar treatments or outcomes.</p>
+                <p><strong>In-processing algorithm:</strong> A bias mitigation algorithm that is applied to a model during its training.</p>
+                <p>><strong>Pre-processing algorithm:</strong> A bias mitigation algorithm that is applied to training data.</p>
+                <p><strong>Post-processing algorithm:</strong> A bias mitigation algorithm that is applied to predicted labels.</p>
+                <p><strong>Privileged protected attribute:</strong> A value of a protected attribute indicating a group that has historically been at systematic advantage.</p>
+                <p><strong>Protected attribute:</strong> An attribute that partitions a population into groups whose outcomes should have parity. Examples include race, gender, caste, and religion. Protected attributes are not universal, but are application specific.</p>
+                <h4>Metrics used based on application</h4>
+                <ul>
+                    <li><p>If the application is concerned with individual fairness, then the metrics in the SampleDistortionMetric class should be used. If the application is concerned with group fairness, then the metrics in the Dataset Metric class (and in its children classes such as the BinaryLabelDatasetMetric class) as well as the Classification Metric class (except the ones noted in the next sentence) should be used. If the application is concerned with both individual and group fairness, and requires the use of a single metric, then the generalized entropy index and its specializations to Theil index and coefficient of variation in the Classification Metric class should be used.</p></li>
+                    <li><p>There are a large number of fairness metrics that may be appropriate for a given application. Fairness can be measured at different points in a machine learning pipeline: either on the training data or on the learned model, which also relates to the pre-processing, in-processing, and post-processing categories of bias mitigation algorithms [6]. If the application requires metrics on training data, the ones in the Dataset Metric class (and in its children classes such as the BinaryLabelDatasetMetric class) should be used. If the application requires metrics on models, the ones in the Classification Metric class should be used.</p></li>
+                </ul>
+                <h5>Few examples of Metrics</h5>
+                <p><strong>Statistical Parity Difference:</strong> The difference in the rate of favorable outcomes received by unprivileged group to the privileged group. Ideal value for this is 0, which means there is no biasness present. Negative value for this means that the data is biased towards the privileged group and positive values means, it is biased towards the unprivileged group.</p>
+                <img class="rounded mx-auto d-block" src="{% static "images/aif_spd.png" %}" alt="Statistical_Parity_Difference"><br>
+                <p><strong>Disparate Impact:</strong> Ratio of the rate of favorable outcome for the unprivileged group to the privileged group. Ideal value is 1.</p>
+                <img class="rounded mx-auto d-block" src="{% static "images/aif_di.png" %}" alt="Disparate_Impact"><br>
+                <p><strong>Equal opportunity difference:</strong> Difference of the True Positive Rate of unprivileged group to the privileged group. Ideal value for no bias present is 0.</p>
+                <img class="rounded mx-auto d-block" src="{% static "images/aif_eod.png" %}" alt="Equal_opportunity_difference"><br>
+                <p><strong>Average odds difference:</strong> The average difference of false positive rate and true positive rate between unprivileged group to the privileged group. Ideal value is 0.</p>
+                <img class="rounded mx-auto d-block" src="{% static "images/aif_aod.png" %}" alt="Average_odds_difference"><br>
+                <h4>Algorithms</h4>
+                <p>Bias mitigation algorithms attempt to improve the fairness metrics by modifying the training data, the learning algorithm, or the predictions. These algorithm categories are known as pre-processing, in-processing, and post-processing, respectively [6]. The choice among algorithm categories can partially be made based on the user persona’s ability to intervene at different parts of a machine learning pipeline. If the user is allowed to modify the training data, then pre-processing can be used. If the user is allowed to change the learning algorithm, then in-processing can be used. If the user can only treat the learned model as a black box without any ability to modify the training data or learning algorithm, then only post-processing can be used.</p>
+                <ul>
+                    <li><p>Among pre-processing algorithms, <a href="http://doi.org/10.1007/s10115-011-0463-8" target="_blank"><strong>reweighing</strong></a> only changes weights applied to training samples; it does not change any feature or label values. Therefore, it may be a preferred option in case the application does not allow for value changes.</p></li>
+                    <li><p>Among in-processing algorithms, the prejudice remover is limited to learning algorithms that allow for regularization terms whereas the <a href="https://arxiv.org/abs/1801.07593" target="_blank"><strong>adversarial debiasing algorithm</strong></a> allows for a more general set of learning algorithms, and may be preferred for that reason.</p></li>
+                    <li><p>Among post-processing algorithms, the two equalized odds post-processing algorithms have a randomized component whereas the <a href="https://doi.org/10.1109/ICDM.2012.45" target="_blank">reject option algorithm</a>is deterministic, and may be preferred for that reason.</p></li>
+                </ul>
+                <p>Let me explain each of these algorithms - </p>
+                <h5>Reweighing Algorithm</h5>
+                <p>The advantage of this <a href="https://github.com/Trusted-AI/AIF360/blob/master/examples/demo_reweighing_preproc.ipynb" target="_blank">approach</a> is, instead of modifying the labels, it assigns different weights to the examples based upon their categories of protected attribute and outcome such that bias is removed from the training dataset. The weights are based on frequency counts. However as this technique is designed to work only with classifiers that can handle row-level weights, this may limit your modeling options.</p>
+                <p>To demonstrate how this technique can be used to reduce bias, I use the <a href="https://archive.ics.uci.edu/ml/datasets/adult" target="_blank">Adult dataset</a>. The binary target in this dataset is whether an individual has an income higher or lower than $50k. It contains several features that are protected by the law in the US, but for simplicity in this post, I will focus on sex. As can be seen in the table below, Male is the privileged group with a 31% probability of having a positive outcome (>$50k) compared to an 11% probability of having a positive outcome for the Female group.</p>
+                <img class="rounded mx-auto d-block" src="{% static "images/aif_adult_ds.png" %}" alt="aif_adult_ds"><br>
+                <p>The disparate impact metric, as described in the 2nd equation above, is a measure of discrimination in the data. A score of 1 indicates the dataset is discrimination-free. When calculated on the unweighted Adult dataset for Male versus Female, the score is 0.36.</p>
+                <p>Using the frequency counts in the table above, the reweighing technique will assign weights as follows the below equation. For example, for the privileged group with the positive outcome (that is, Male with greater than $50k income), the weight is calculated as:</p>
+                <img class="rounded mx-auto d-block" src="{% static "images/aif_pp.png" %}" alt="aif_pp"><br>
+                <p>Thus the weights for each category in the training data are:</p>
+                <img class="rounded mx-auto d-block" src="{% static "images/aif_after_rw.png" %}" alt="aif_after_reweighing"><br>
+                <p>By applying these weights to the counts, the disparate impact metric would become 1 for the training data and thus now “discrimination-free.”</p>
+                <h5>Adversarial debiasing Algorithm</h5>
+                <p>In <a href="https://github.com/Trusted-AI/AIF360/blob/master/examples/demo_adversarial_debiasing.ipynb" target="_blank">adversarial debiasing</a>, you’re building two models. The first is predicting your target, based upon whatever feature engineering and pre-processing steps you’ve taken on your training data already. The second model is the adversary, and it tries to predict, based upon the predictions of your first model, the sensitive attribute. Ideally, in a situation without bias, this adversarial model should not be able to predict well the sensitive attribute. The adversarial model, therefore, guides modifications of the original model (via parameters and weighting) that weakens the predictive power of the adversarial model until it cannot predict the protected attributes well based upon the outcomes.</p>
+                <p>The advantage of this method is that you directly intervene at the learning stage of the modeling workflow. In addition, it can be applied to both classification and regression.</p>
+                <h5>Reject option Algorithm</h5>
+                <p>In this <a href="https://github.com/Trusted-AI/AIF360/blob/master/examples/demo_reject_option_classification.ipynb" target="_blank">algorithm</a>, predictions are made based on the optimal classification threshold and the critical region boundary (Reject Option Classification margin) using a validation set which are estimated for the desired constraint on fairness. The best parameters are those that maximize the classification threshold while satisfying the fairness constraints. The constraints can be used on the following fairness measures:</p>
+                <p>The advantage of this method is that you directly intervene at the learning stage of the modeling workflow. In addition, it can be applied to both classification and regression.</p>
+                <ul>
+                    <li><p>Statistical parity difference on the predictions of the classifier.</p></li>
+                    <li><p>Average odds difference for the classifier.</p></li>
+                    <li><p>Equal opportunity difference for the classifier.</p></li>
+                </ul>
+                <h4>Summary</h4>
+                <ul>
+                    <li><p>Fairness becomes a very popular topic in ML community in recent years.</p></li>
+                    <li><p>Fairness matters because it has impact on everyone’s benefit.</p></li>
+                    <li><p>Unfairness in ML systems is mainly due to human bias existing in the training data.</p></li>
+                    <li><p>Trade-off between accuracy and fairness usually exists.</p></li>
+                    <li><p>There are three streams of methods: preprocessing, optimization at training time, and post-processing. Each has pros and cons.</p></li>
+                    <li><p>Most fair algorithms use the sensitive attributes to achieve certain fairness notions. However, such information may not be available in reality and thus exploratory data analysis is important.</p></li>
+                </ul>
+            </section>
+        </main>
+    </div>
+    <script src="{% static "vendors/jquery/dist/jquery.min.js" %}"></script>
+    <script src="{% static "vendors/@popperjs/core/dist/umd/popper-base.min.js" %}"></script>
+    <script src="{% static "vendors/bootstrap/dist/js/bootstrap.min.js" %}"></script>
+    <script src="{% static "vendors/entry/jq.entry.min.js" %}"></script>
+    <script src="{% static "js/live-resume.js" %}"></script>
+</body>
+
+</html>
